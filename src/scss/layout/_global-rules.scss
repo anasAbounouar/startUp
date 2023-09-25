@@ -1,0 +1,141 @@
+body {
+    font-family: "Roboto", sans-serif;
+    line-height: 1.8;
+    scroll-behavior: smooth;
+}
+/* For WebKit based browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background:linear-gradient(rgba(17, 7, 255 ), rgba(0, 224, 255 ));;
+  }
+  
+  /* For Firefox */
+  ::-moz-scrollbar {
+    width: 10px;
+  }
+  
+  ::-moz-scrollbar-thumb {
+    background:linear-gradient(rgba(17, 7, 255 ), rgba(0, 224, 255 ));;
+  }
+  
+
+
+
+
+section{
+    padding-top: 50px;
+    padding-bottom: 50px;
+ 
+    position: relative;
+}
+img{
+    max-width: 100%;
+
+}
+ul li{
+    list-style: none;
+}
+
+
+
+
+
+
+  
+
+
+:root {
+    /* Brand Color: Vibrant Blue */
+    --brand-color: #2196F3;
+    --brand-color-weak: rgba(33, 150, 243, 0.2);
+  
+    /* Secondary Colors */
+    --secondary-color--blue: #CFD8DC;
+    --secondary-color-coral: #FFAB91;
+    --secondary-color-green: #A5D6A7;
+    --secondary-green-alt: #04D20D;
+    --secondary-color-brown: #E9CBAF;
+    --secondary-color-lilac: #E1BEE7;
+    --lilac-hovered: pink;
+    --secondary-color-orange: #FF8A00;
+    --secondary-color-danger: #DC6803;
+    --secondary-color-yellow: #ffff00;
+    --apercu-rapide-color: green;
+    --text-danger-color: #FFFFCC;
+    --text-color: #727272;
+    --dark-color: #2F2F2F;
+    --facebook-color: #1877f2;
+    --instagram-color: #c32aa3;
+    --youtube-color: #ff0000;
+    --text-grey-color: #A0ABC0;
+    --arrissala-color: #FFF5B8;
+    --text-inside-lilac:#000080;
+    --bigFilter-width: 300px;
+    --littleFilter-width: 50px;
+    --content-color: #eee;
+    --littleFilter-color: #cecece;
+    --login-background-color:#d18742;
+    --link-color: #0052cc;
+  }
+  
+  
+.c-alt-green{
+
+color: var(--secondary-green-alt);
+}
+.c-brand {
+    color: var(--brand-color);
+}
+.c-text-color {
+    color: var(--text-color);
+}
+.c-text-inside-lilac {
+    color: var(--text-inside-lilac);
+}
+  /* Example usage */
+  body {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+  }
+  
+  .button {
+    background-color: var(--color-accent);
+    color: var(--color-dark);
+  }
+  
+.c-wheat{
+    color: wheat;
+}
+.bg-orange{
+    background-color: var(--orange-color);
+}
+
+
+h1,h2,h3,h4,h5,h6 {
+    
+    font-weight: 700;
+}
+
+a {
+    text-decoration: none;
+    
+    transition: all 0.4s ease;
+}
+
+
+
+
+
+.bg-base {
+    background-color: var(--color-base);
+    
+}
+.bg-brand{
+    background-color: var(--brand-color);
+}
+.col-lg-custom {
+    width: 20% !important;
+}
