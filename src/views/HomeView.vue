@@ -117,10 +117,10 @@
             </div>
           </div>
           <!-- place for about us  -->
-          <div class="about-content col-lg-5 mt-5 ms-4 text-left">
-            <p>WHO WE ARE ____</p>
-            <h3>FOURNITURES POUR LIBRAIRIES</h3>
-            <h5>Lien librairie-fournisseur</h5>
+          <div class="about-content col-lg-5 mt-5 text-left">
+            <p class="mb-2">Qui somme nous</p>
+            <h3 class="my-2">FOURNITURES POUR LIBRAIRIES</h3>
+            <h5 class="mb-2">Lien librairie-fournisseur</h5>
             <span
               >Chez dipoDirect, nous nous engageons à révolutionner le processus
               d'approvisionnement des librairies en leur offrant une plateforme
@@ -143,12 +143,13 @@
         <h2 class="">Avis</h2>
       </div>
 
-      <swiper
-        class="row w-full align-center justify-content-center px-4"
+      <swiper-container
+        class="row w-full align-center justify-content-center ps-4"
         :slides-per-view="slidesPerView"
         :space-between="50"
-        @swiper="onSwiper"
-        @slideChange="onSlideChange"
+        navigation="true"
+        pagination="true"
+        css-mode="true"
       >
         <swiper-slide
           v-for="avi in avis"
@@ -181,27 +182,30 @@
             </div>
           </div>
         </swiper-slide>
-      </swiper>
+      </swiper-container>
     </section>
   </div>
 </template>
 <script>
-import "tiny-slider/src/tiny-slider";
 import { mapActions } from "vuex"; // Assuming you are using Vuex for managing state
 import "../scss/helpers/_mixin.scss";
-import { Swiper, SwiperSlide } from "swiper/vue";
-// import Swiper core and required modules
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-import "swiper/swiper.scss";
-import "swiper/components/navigation/navigation.scss";
-import "swiper/components/pagination/pagination.scss";
-import "swiper/components/scrollbar/scrollbar.scss";
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+// import { Swiper, SwiperSlide } from "swiper/vue";
+// // import function to register Swiper custom elements
+// // import Swiper core and required modules
+// import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+// import "swiper/swiper.scss";
+// import "swiper/components/navigation/navigation.scss";
+// import "swiper/components/pagination/pagination.scss";
+// import "swiper/components/scrollbar/scrollbar.scss";
+// SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+// import function to register Swiper custom elements
+import { register } from "swiper/element/bundle";
+import "swiper/element/css/pagination";
+import "swiper/element/css/navigation";
+import "swiper/element/css/scrollbar";
+// register Swiper custom elements
+register();
 export default {
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
   data() {
     return {
       slidesPerView: 3, // Default number of slides per view
@@ -227,20 +231,20 @@ export default {
         },
         {
           id: 2,
-          name: "J.Youssef",
-          text: "Excellent service . Pas probleme d'embouteillage ou fatique non necessaire",
+          name: "J.balan",
+          text: "Servizio eccellente. Nessun ingorgo o fatica inutile.",
           date: "06 janvier 2024",
         },
         {
           id: 3,
-          name: "J.Youssef",
-          text: "Excellent service . Pas probleme d'embouteillage ou fatique non necessaire",
+          name: "K.Amin",
+          text: "Le service est excellent, et il n'y a ni problème d'embouteillage ni fatigue inutile",
           date: "06 janvier 2024",
         },
         {
           id: 4,
-          name: "J.Youssef",
-          text: "Excellent service . Pas probleme d'embouteillage ou fatique non necessaire",
+          name: "M.Moad",
+          text: "C'est un service de grande qualité, sans souci de circulation ni fatigue superflue.",
           date: "06 janvier 2024",
         },
       ],
@@ -261,7 +265,7 @@ export default {
     },
     updateSlidesPerView() {
       // Determine the screen width
-      const screenWidth = window.innerWidth;
+      let screenWidth = window.innerWidth;
       console.log(screenWidth, "this is screen width");
 
       // Adjust the number of slides per view based on screen width
@@ -272,12 +276,12 @@ export default {
         this.slidesPerView = 1; // Default for larger screens
       }
     },
-    onSwiper(swiper) {
-      console.log(swiper);
-    },
-    onSlideChange() {
-      console.log("slide change");
-    },
+    // onSwiper(swiper) {
+    //   console.log(swiper);
+    // },
+    // onSlideChange() {
+    //   console.log("slide change");
+    // },
   },
   mounted() {
     // Detect the screen size when the component is mounted
@@ -410,6 +414,7 @@ export default {
 }
 #avis {
   position: relative;
+  padding-top: 10px;
   .avis-head {
     position: relative;
     color: var(--brand-color);

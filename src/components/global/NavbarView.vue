@@ -35,8 +35,8 @@
               <img :src="AccountsData.imgSrc" alt="" />
             </a>
             <!-- <a class="nav-link" href="#">Login</a> -->
-            <a class="nav-link" href="#"
-              ><img src="@/assets/wtsp.svg" alt="Wtsp"
+            <a class="nav-link d-flex align-items-center" href="#">
+              whatsapp <img src="@/assets/wtsp.svg" alt="Wtsp" class="ms-1"
             /></a>
             <a class="nav-link" href="#">Contact</a>
           </div>

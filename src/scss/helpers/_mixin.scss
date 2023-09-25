@@ -9,6 +9,11 @@
         @content;
       }
     }
+    @if $point == 'md only' {
+      @media (min-width: 768px) {
+        @content;
+      }
+    }
     @if $point == 'sm' {
       @media (max-width: 767px) {
         @content;
