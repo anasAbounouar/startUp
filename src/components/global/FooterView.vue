@@ -13,23 +13,25 @@
             />
           </div>
           <div
-            class="col-4 application application justify-content-center d-flex align-center flex-d-c p-relative"
+            class="col-4 application justify-content-center d-flex align-center flex-d-c p-relative"
           >
             <h5 class="c-white">Telecharger l'application</h5>
-            <a href=""
-              ><img
-                src="@/img/footer/appstore-en.png"
-                alt=""
-                decoding="async"
-                class="p-1 m-1"
-            /></a>
-            <a href=""
-              ><img
-                src="@/img/footer/playstore-en.png"
-                alt=""
-                decoding="async"
-                class="p-1 m-1"
-            /></a>
+            <div class="d-md-flex align-items-center flex-md-column">
+              <a href=""
+                ><img
+                  src="@/img/footer/appstore-en.png"
+                  alt=""
+                  decoding="async"
+                  class="p-1 m-1"
+              /></a>
+              <a href=""
+                ><img
+                  src="@/img/footer/playstore-en.png"
+                  alt=""
+                  decoding="async"
+                  class="p-1 m-1"
+              /></a>
+            </div>
           </div>
           <div class="col-4 reseaux d-flex align-center flex-d-c p-relative">
             <h2 class="c-white">Réseaux Sociaux</h2>
@@ -80,47 +82,58 @@
         </div>
       </div>
     </footer>
+    <ul
+      v-if="!large"
+      class="nav nav-pills fixed-bottom bg-body-tertiary d-flex justify-content-around"
+    >
+      <li class="nav-item">
+        <a class="nav-link wishlist p-relative" aria-current="page" href="#">
+          <div class="wishlist-counter">0</div>
+          <i class="fa-regular fa-heart"></i
+        ></a>
+      </li>
+      <li class="nav-item">
+        <div>
+          <a class="nav-link" href="#"><i class="fa-regular fa-user"></i></a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link p-relative shop" href="#"
+          ><div class="p-absolute shop-counter">0</div>
+          <i class="fa-solid fa-cart-shopping"></i
+        ></a>
+      </li>
+    </ul>
   </div>
 </template>
 <script>
-// function debounce(func, delay) {
-//     let timeoutId;
-//     return function () {
-//         clearTimeout(timeoutId);
-//         timeoutId = setTimeout(func, delay);
-//     };
-// }
-
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "footer",
-  // mounted() {
-  //     // Replace the original event listener with the debounced version
-  //     window.addEventListener("scroll", this.handleScrollDebounced);
-  // },
-  // beforeDestroy() {
-  //     // Remove the debounced event listener on component destruction
-  //     window.removeEventListener("scroll", this.handleScrollDebounced);
-  // },
-  // methods: {
-  //     handleScroll() {
-  //         var navbar = document.querySelector(".NavInter");
-  //         var RechercheGenerale =
-  //             document.getElementById("rechercheGenerale");
-  //         if (window.scrollY >= 50) {
-  //             navbar.classList.add("navModification");
-  //         } else {
-  //             navbar.classList.remove("navModification");
-  //         }
-  //         console.log(RechercheGenerale);
-  //     },
-  // },
-  // computed: {
-  //     // Create a computed property that holds the debounced version of handleScroll
-  //     handleScrollDebounced() {
-  //         return debounce(this.handleScroll, 70);
-  //     },
-  // },
+  data() {
+    return {
+      large: "true",
+    };
+  },
+  methods: {
+    showTab() {
+      let screenWidth = window.innerWidth;
+      console.log(screenWidth, "this is screen width");
+      if (screenWidth < 991) {
+        this.large = false;
+      } else {
+        this.large = true;
+      }
+    },
+  },
+  mounted() {
+    this.showTab();
+    window.addEventListener("resize", this.showTab);
+  },
+  beforeUnmount() {
+    // Remove the event listener when the component is unmounted
+    window.removeEventListener("resize", this.showTab);
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -159,7 +172,6 @@ export default {
       }
     }
     .down {
-      background: #1a202c;
       .copywrite,
       .terms {
         flex: 0 0 auto !important;
@@ -198,7 +210,7 @@ export default {
 }
 footer {
   padding-top: 40px;
-  padding-bottom: 40px;
+  padding-bottom: 60px;
   background-color: var(--dark-color);
   .application {
     img {
@@ -240,8 +252,46 @@ footer {
     .row {
       justify-content: flex-end;
       a {
-        color: var(--text-grey-color);
+        color: var(--text-grey-color) !important;
       }
+    }
+  }
+}
+ul {
+  li {
+    font-size: 24px;
+    .fa-user {
+      color: #333333;
+    }
+    .shop {
+      position: relative;
+      color: var(--brand-color);
+      .shop-counter {
+        background-color: var(--brand-color);
+      }
+    }
+    .wishlist {
+      color: var(--heart-color);
+      .wishlist-counter {
+        background-color: var(--heart-color);
+      }
+    }
+    .wishlist-counter,
+    .shop-counter {
+      font-size: 17px;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      color: inherit;
+      /* top: -5px; */
+      /* right: -5px; */
+      border-radius: 50%;
+      height: 20px;
+      width: 20px;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      color: white;
     }
   }
 }

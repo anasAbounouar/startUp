@@ -17,7 +17,7 @@
                 @change="navigateToPage"
               >
                 <option value="" selected disabled hidden>
-                  --Choisir votre librairie--
+                  --Choisir votre fournisseur--
                 </option>
                 <option
                   v-for="option in options"
@@ -95,10 +95,10 @@
       <div class="d-flex mt-5 align-center justify-content-center bg-brand">
         <p class="m-0 p-10 c-white">
           Simple
-          <img src="../assets/shackHands.svg" alt="" /> rapide
-          <img src="../assets/speedMeter.svg" alt="" />
+          <i class="fa-solid fa-handshake-simple"></i> rapide
+          <i class="fa-solid fa-gauge-high"></i>
           et sans frais supplementaires
-          <img src="../assets/smile.svg" alt="" srcset="" />
+          <i class="fa-solid fa-face-smile-beam"></i>
         </p>
       </div>
     </section>
@@ -118,7 +118,7 @@
           </div>
           <!-- place for about us  -->
           <div class="about-content col-lg-5 mt-5 text-left">
-            <p class="mb-2">Qui somme nous</p>
+            <p class="mb-2">Qui somme nous ___</p>
             <h3 class="my-2">FOURNITURES POUR LIBRAIRIES</h3>
             <h5 class="mb-2">Lien librairie-fournisseur</h5>
             <span
@@ -129,11 +129,11 @@
               rationaliser ce processus, permettant ainsi aux librairies de se
               concentrer sur leur activité principale.</span
             >
-            <router-link to="/">
+            <!-- <router-link to="/">
               <button type="button" class="d-block mt-3 btn btn-primary">
                 Read More
               </button>
-            </router-link>
+            </router-link> -->
           </div>
         </div>
       </div>
@@ -184,37 +184,79 @@
         </swiper-slide>
       </swiper-container>
     </section>
+    <section id="contactUs">
+      <div class="d-flex justify-content-around flex-wrap">
+        <div class="left">
+          <h4 class="c-contact">Contactez-nous</h4>
+          <p class="px-3 c-contact">
+            Nous sommes là pour vous ! Comment pouvons-nous vous aider ?
+          </p>
+          <form action="" class="d-flex flex-d-c">
+            <div class="p-3 d-flex flex-d-c">
+              <label for="" class="d-flex">Nom</label>
+              <input type="text" />
+            </div>
+            <div class="p-3 d-flex flex-d-c">
+              <label for="" class="d-flex">Email</label>
+              <input type="text" />
+            </div>
+            <div class="p-3 d-flex flex-d-c">
+              <label for="" class="d-flex">Message</label>
+              <textarea name="" id="" cols="30" rows="10"></textarea>
+            </div>
+            <!-- <button type="submit mx-3">Submit</button> -->
+            <div class="p-3 d-flex flex-d-c">
+              <button type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
+        <div class="right">
+          <img class="img-fluid" src="@/assets/contactus.png" alt="img" />
+          <!-- <ul class="d-flex justify-content-center flex-d-c">
+            <li>Casablanca Prince</li>
+            <li>067508371</li>
+            <li>dipoDirect@gmail.com</li>
+          </ul> -->
+          <div class="d-flex justify-content-center">
+            <div class="info d-block">
+              <div class="d-flex align-center">
+                <i class="fa-solid fa-location-dot mr-10"></i>
+                <p class="m-0 p-2">Casablanca Prince</p>
+              </div>
+              <div class="d-flex align-center">
+                <i class="fa-solid fa-phone mr-10"></i>
+                <p class="m-0 p-2">067508371</p>
+              </div>
+              <div class="d-flex align-center">
+                <i class="fa-regular fa-envelope mr-10"></i>
+
+                <p class="m-0 p-2">dipoDirect@gmail.com</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 <script>
 import { mapActions } from "vuex"; // Assuming you are using Vuex for managing state
 import "../scss/helpers/_mixin.scss";
-// import { Swiper, SwiperSlide } from "swiper/vue";
-// // import function to register Swiper custom elements
-// // import Swiper core and required modules
-// import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-// import "swiper/swiper.scss";
-// import "swiper/components/navigation/navigation.scss";
-// import "swiper/components/pagination/pagination.scss";
-// import "swiper/components/scrollbar/scrollbar.scss";
-// SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
-// import function to register Swiper custom elements
 import { register } from "swiper/element/bundle";
-import "swiper/element/css/pagination";
-import "swiper/element/css/navigation";
-import "swiper/element/css/scrollbar";
+import { libraryDatas } from "@/Js/homePageData/libraryDatas.js";
 // register Swiper custom elements
 register();
 export default {
   data() {
     return {
+      libraryDatas,
       slidesPerView: 3, // Default number of slides per view
       SelectedOption: "",
       options: [
-        { label: "Arrissala", value: "arrissala", route: "/Arrissala" },
-        { label: "Aladnane", value: "aladnane", route: "/arrissala" },
-        { label: "Top bleu", value: "topbleu", route: "/TopBleu" },
-        { label: "Achourok", value: "achourok", route: "/" },
+        { label: "Arrissala", value: "arrissala", nom: "arrissala" },
+        { label: "Aladnane", value: "aladnane", nom: "arrissala" },
+        { label: "Top bleu", value: "topbleu", nom: "topbleu" },
+        { label: "Achourok", value: "achourok", nom: "" },
       ],
       avis: [
         {
@@ -259,10 +301,14 @@ export default {
           (option) => option.value === this.SelectedOption
         );
         if (SelectedOption) {
-          this.$router.push(SelectedOption.route);
+          this.$router.push({
+            name: "library-intro",
+            params: { nom: SelectedOption.nom },
+          });
         }
       }
     },
+
     updateSlidesPerView() {
       // Determine the screen width
       let screenWidth = window.innerWidth;
@@ -366,6 +412,21 @@ export default {
       line-height: 24px;
       letter-spacing: -0.2px;
     }
+  }
+  .fa-handshake-simple,
+  .fa-gauge-high,
+  .fa-face-smile-beam {
+    font-size: 24px;
+    vertical-align: middle;
+  }
+  .fa-handshake-simple {
+    color: #333;
+  }
+  .fa-gauge-high {
+    color: #ffa500;
+  }
+  .fa-face-smile-beam {
+    color: #ffd700;
   }
 }
 #about {
@@ -472,6 +533,59 @@ export default {
         top: -13px;
         font-size: 30px;
       }
+    }
+  }
+}
+#contactUs {
+  background-color: var(--contact-background);
+  input,
+  textarea {
+    border-radius: 6px;
+    border: 1px solid var(--contact-color);
+    &:focus {
+      outline: none;
+      box-shadow: 1px 1px 1px 1px var(--contact-color);
+    }
+  }
+  .left {
+    flex: 1;
+    textarea {
+      height: 180px;
+    }
+    div:last-child {
+      button {
+        padding: 2px 110px;
+        background: var(--contact-color);
+        border: none;
+        color: white;
+        border-radius: 6px;
+        box-shadow: 1px 1px 1px var(--contact-color);
+        transition: 0.4s;
+        outline: none;
+        &:hover {
+          transform: translateY(-1px);
+          background: var(--brand-color);
+          color: white;
+        }
+      }
+    }
+  }
+  .right {
+    flex: 1;
+    img {
+      max-height: 367px;
+    }
+    i {
+      font-size: 30px;
+      color: var(--contact-color);
+    }
+  }
+}
+@media (max-width: 767px) {
+  #contactUs {
+    .right {
+      order: -1;
+      margin-bottom: 20px;
     }
   }
 }

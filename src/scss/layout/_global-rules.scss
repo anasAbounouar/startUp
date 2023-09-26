@@ -79,8 +79,14 @@ ul li{
     --littleFilter-color: #cecece;
     --login-background-color:#d18742;
     --link-color: #0052cc;
+    --heart-color: rgba(255, 0, 0, 0.5882352941);
+    --contact-color: #BA68C8;
+    --contact-background: #F8DEFD;
   }
-  
+.c-contact {
+  color: #BA68C8 !important
+
+}
   
 .c-alt-green{
 
@@ -138,4 +144,7 @@ a {
 }
 .col-lg-custom {
     width: 20% !important;
+}
+textarea {
+  resize: none;
 }

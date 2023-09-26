@@ -260,7 +260,6 @@
 
 .flex-d-c{
     flex-direction: column;
-    display: flex;
 }
 .flex-end{
     justify-content: flex-end;
