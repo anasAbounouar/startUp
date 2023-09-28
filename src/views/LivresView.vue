@@ -2,7 +2,7 @@
   <div>
     <section id="intern" class="p-relative pb-4">
       <div id="bigFilter" v-if="!isSidebarHidden" class="p-relative">
-        <button class="hamburger" @click="toggleSidebar">
+        <button class="hamburger" @click="sideBarClicked = !sideBarClicked">
           <span>
             <i class="fa-solid fa-bars"></i>
           </span>
@@ -91,23 +91,13 @@
           </select>
         </div>
       </div>
-      <div
-        id="littleFilter"
-        v-else
-        class="p-relative text-center"
-        @click.prevent="toggleSidebar"
-      >
-        <button class="m-auto hamburger" @click="toggleSidebar">
-          <span>
-            <i class="fa-solid fa-bars"></i>
-          </span>
-        </button>
-        <!-- <div class="vertical-text">Filtres</div> -->
-      </div>
       <div id="library-content" :style="libraryContentStyle">
+        <!-- {{ this.infosGenerales.wishlistCount }} -->
         <div class="container">
-          <div class="row justify-content-space-between">
-            <div class="col-5 align-items-baseline d-flex mt-3">
+          <div class="row justify-content-space-between pt-3">
+            <div
+              class="col-sm-md-12 col-5 align-items-baseline d-flex my-3 justify-content-center-sm-md"
+            >
               <span class="me-2">
                 <router-link to="/Arrissala" class="c-black"
                   >Arrissala</router-link
@@ -127,34 +117,7 @@
               </svg>
               <span class="ms-2">{{ arrow }}</span>
             </div>
-            <div class="col-5 mt-3">
-              <form class="d-flex p-relative" role="search">
-                <input
-                  class="form-control me-2"
-                  type="search"
-                  aria-label="Search"
-                  v-model="searchedLocal"
-                  placeholder="Chercher votre livre ici"
-                />
-              </form>
-              <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span class="navbar-toggler-icon"></span>
-              </button>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-6 align-items-baseline d-flex">
-              <h3>{{ livresData.name }}</h3>
-            </div>
-            <div class="col-6">
+            <div class="col-sm-md-12 col-6">
               <h6 class="fw-bold">Changer la categorie</h6>
               <form action="" class="m-auto">
                 <select
@@ -174,6 +137,33 @@
               </form>
             </div>
           </div>
+          <div class="row my-3">
+            <div class="col-sm-md-12 col-6 align-items-center d-lg-flex">
+              <h3>{{ livresData.name }}</h3>
+            </div>
+            <div class="col-sm-md-12 col-5 form-search-container">
+              <form class="d-flex p-relative ms-auto" role="search">
+                <input
+                  class="form-control me-2"
+                  type="search"
+                  aria-label="Search"
+                  v-model="searchedLocal"
+                  placeholder="Chercher votre livre ici"
+                />
+              </form>
+              <!-- <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button> -->
+            </div>
+          </div>
           <p class="d-flex">
             Showing
             {{ showRemainingBooks ? "0" : displayedBooks.length }}-{{
@@ -185,7 +175,7 @@
           <button
             @click.prevent="toggleBooks"
             class="arrow-btn"
-            v-if="this.searchedAndFilteredBooks.length > 20"
+            v-if="this.GeneralFilter.length > 20"
           >
             <span v-if="showRemainingBooks"
               ><i class="fa-solid fa-right-long"></i
@@ -200,8 +190,8 @@
             <div
               class="g-4 col-of-box"
               :class="{
-                'col-lg-custom col-md-3': isSidebarHidden,
-                'col-lg-3 col-md-4': !isSidebarHidden,
+                'col-sidebar': sideBarClicked,
+                'col-n-sidebar': !sideBarClicked,
               }"
               v-for="book in displayedBooks"
               :key="book.id"
@@ -300,8 +290,8 @@
             <div
               class="g-4 col-of-box"
               :class="{
-                'col-lg-custom col-md-3': isSidebarHidden,
-                'col-lg-3 col-md-4': !isSidebarHidden,
+                'col-lg-custom col-md-3': sideBarClicked,
+                'col-lg-3 col-md-4': !sideBarClicked,
               }"
               v-for="book in remainingBooks"
               :key="book.id"
@@ -393,7 +383,7 @@
           <button
             @click.prevent="toggleBooks"
             class="arrow-btn"
-            v-if="this.searchedAndFilteredBooks.length > 20"
+            v-if="this.GeneralFilter.length > 20"
           >
             <span v-if="showRemainingBooks"
               ><i class="fa-solid fa-right-long"></i
@@ -413,6 +403,7 @@
 import { getCookie } from "@/Js/cookieUtils";
 import { mapActions } from "vuex"; // Assuming you are using Vuex for managing state
 import { register } from "swiper/element/bundle";
+import { infosGenerales } from "@/Js/CartWishlist";
 register();
 import {
   livresData,
@@ -423,6 +414,8 @@ export default {
   name: "arrissala-books",
   data() {
     return {
+      infosGenerales,
+      sideBarClicked: true,
       livresData,
       searchedLocal: "",
       selectedLanguage: "0",
@@ -451,62 +444,8 @@ export default {
   methods: {
     addToCart,
     addToWishlist,
-    filterBySearchTerm() {
-      if (this.searchedLocal !== "") {
-        let filtering = new RegExp(this.searchedLocal, "i", "g");
-        if (
-          livresData.books.filter((book) => book.title.match(filtering))
-            .length == 0
-        ) {
-          return ["0"];
-        } else {
-          return livresData.books.filter((book) => book.title.match(filtering));
-        }
-      } else {
-        return [];
-      }
-    },
-    filterBySelectedLevel(books) {
-      if (this.selectedBebe !== "" && this.selectedBebe !== "Tout") {
-        return books.filter((book) => book.level === this.selectedBebe);
-      } else if (
-        this.selectedPrimaire !== "" &&
-        this.selectedPrimaire !== "Tout"
-      ) {
-        return books.filter((book) => book.level === this.selectedPrimaire);
-      } else if (
-        this.selectedCollege !== "" &&
-        this.selectedCollege !== "Tout"
-      ) {
-        return books.filter((book) => book.level === this.selectedCollege);
-      } else if (this.selectedLycee !== "" && this.selectedLycee !== "Tout") {
-        return books.filter((book) => book.level === this.selectedLycee);
-      } else if (
-        this.selectedLanguage !== "0" &&
-        this.selectedLanguage !== "Tout"
-      ) {
-        return books.filter((book) => book.langue === this.selectedLanguage);
-      } else {
-        return books;
-      }
-    },
-    filterBySelectedLanguage(books) {
-      if (this.selectedLanguage !== "0" && this.selectedLanguage !== "Tout") {
-        return books.filter((book) => book.langue === this.selectedLanguage);
-      } else {
-        return books;
-      }
-    },
-    updateFilteredBooks() {
-      let searchedBooks = this.filterBySearchTerm();
-      let filteredBooks = this.filterBySelectedLevel(searchedBooks);
-      this.filteredBooks = this.filterBySelectedLanguage(filteredBooks);
-    },
     toggleBooks() {
       this.showRemainingBooks = !this.showRemainingBooks;
-    },
-    toggleSidebar() {
-      this.isSidebarHidden = !this.isSidebarHidden;
     },
     loadBookData() {
       livresData.books.forEach((book) => {
@@ -542,45 +481,82 @@ export default {
     this.loadBookData();
   },
   computed: {
-    searchedAndFilteredBooks() {
-      let searchedBooks = this.filterBySearchTerm();
-
-      if (searchedBooks.length > 0 && searchedBooks !== ["0"]) {
-        let searchedLanguages = this.filterBySelectedLanguage(searchedBooks);
-        return this.filterBySelectedLevel(searchedLanguages);
-      } else if (searchedBooks === ["0"]) {
-        livresData.books = [];
-
-        return livresData.books;
-      } else {
-        return this.filterBySelectedLevel(
-          this.filterBySelectedLanguage(livresData.books)
+    languageFilter() {
+      if (this.selectedLanguage === "0") {
+        return this.livresData.books;
+      }
+      return this.livresData.books.filter((book) => {
+        return book.langue === this.selectedLanguage;
+      });
+    },
+    LevelFilter() {
+      if (this.selectedBebe !== "" && this.selectedBebe !== "Tout") {
+        return this.livresData.books.filter(
+          (book) => book.level === this.selectedBebe
         );
+      } else if (
+        this.selectedPrimaire !== "" &&
+        this.selectedPrimaire !== "Tout"
+      ) {
+        return this.livresData.books.filter(
+          (book) => book.level === this.selectedPrimaire
+        );
+      } else if (
+        this.selectedCollege !== "" &&
+        this.selectedCollege !== "Tout"
+      ) {
+        return this.livresData.books.filter(
+          (book) => book.level === this.selectedCollege
+        );
+      } else if (this.selectedLycee !== "" && this.selectedLycee !== "Tout") {
+        return this.livresData.books.filter(
+          (book) => book.level === this.selectedLycee
+        );
+      } else {
+        return this.livresData.books;
       }
     },
+    filterBySearchTerm() {
+      if (this.searchedLocal !== "") {
+        let filtering = new RegExp(this.searchedLocal, "i", "g");
+        return this.livresData.books.filter((book) =>
+          book.title.match(filtering)
+        );
+      }
+      return this.livresData.books;
+    },
+    GeneralFilter() {
+      return this.LevelFilter.filter((book) => {
+        // Assuming book.langue is the language property of a book
+        return (
+          this.languageFilter.includes(book) &&
+          this.filterBySearchTerm.includes(book)
+        );
+      });
+    },
     bookCount() {
-      return this.searchedAndFilteredBooks.length;
+      return this.GeneralFilter.length;
     },
     displayedBooks() {
       const maxBooks = 20;
-      if (this.searchedAndFilteredBooks.length <= maxBooks) {
-        return this.searchedAndFilteredBooks;
+      if (this.GeneralFilter.length <= maxBooks) {
+        return this.GeneralFilter;
       } else {
-        return this.searchedAndFilteredBooks.slice(0, maxBooks);
+        return this.GeneralFilter.slice(0, maxBooks);
       }
     },
     remainingBooks() {
       const maxBooks = 20;
-      if (this.searchedAndFilteredBooks.length > maxBooks) {
-        return this.searchedAndFilteredBooks.slice(maxBooks);
+      if (this.GeneralFilter.length > maxBooks) {
+        return this.GeneralFilter.slice(maxBooks);
       } else {
         return [];
       }
     },
     libraryContentStyle() {
-      if (this.isSidebarHidden) {
+      if (this.sideBarClicked) {
         return {
-          marginLeft: "var(--littleFilter-width)",
+          marginLeft: "50px",
         };
       } else {
         return {
@@ -594,7 +570,7 @@ export default {
       if (newValue !== "") {
         this.selectedPrimaire = "";
         this.selectedCollege = "";
-        this.updateFilteredBooks();
+        // this.updateFilteredBooks();
         this.showRemainingBooks = true;
       }
     },
@@ -602,7 +578,7 @@ export default {
       if (newValue !== "") {
         this.selectedBebe = "";
         this.selectedCollege = "";
-        this.updateFilteredBooks();
+        // this.updateFilteredBooks();
         this.showRemainingBooks = true;
       }
     },
@@ -610,7 +586,15 @@ export default {
       if (newValue !== "") {
         this.selectedBebe = "";
         this.selectedPrimaire = "";
-        this.updateFilteredBooks();
+        // this.updateFilteredBooks();
+        this.showRemainingBooks = true;
+      }
+    },
+    selectedLycee(newValue) {
+      if (newValue !== "") {
+        this.selectedCollege = "";
+        this.selectedPrimaire = "";
+
         this.showRemainingBooks = true;
       }
     },
@@ -619,6 +603,45 @@ export default {
         this.showRemainingBooks = true;
       }
     },
+    sideBarClicked() {
+      if (this.sideBarClicked === true) {
+        document.getElementById("bigFilter").style.width = "50px";
+        document.getElementById("langue").style.display = "none";
+        document.getElementById("niveau").style.display = "none";
+      } else if (this.sideBarClicked === false) {
+        const screen = window.innerWidth;
+        if (screen < 767) {
+          document.getElementById("bigFilter").style.width = "100%";
+        } else {
+          document.getElementById("bigFilter").style.width =
+            "var(--bigFilter-width)";
+        }
+
+        document.getElementById("langue").style.display = "block";
+        document.getElementById("niveau").style.display = "block";
+      }
+    },
+  },
+  mounted() {
+    // this.logInfosGenerales = setInterval(() => {
+    //   console.log(this.infosGenerales.wishlistCount);
+    // }, 3000); // 3000 milliseconds = 3 seconds
+    if (this.sideBarClicked === true) {
+      document.getElementById("bigFilter").style.width = "50px";
+      document.getElementById("langue").style.display = "none";
+      document.getElementById("niveau").style.display = "none";
+    } else if (this.sideBarClicked === false) {
+      const screen = window.innerWidth;
+      if (screen < 767) {
+        document.getElementById("bigFilter").style.width = "100%";
+      } else {
+        document.getElementById("bigFilter").style.width =
+          "var(--bigFilter-width)";
+      }
+
+      document.getElementById("langue").style.display = "block";
+      document.getElementById("niveau").style.display = "block";
+    }
   },
 };
 </script>
@@ -695,8 +718,8 @@ export default {
   .force-rotation {
     transform: rotate(180deg);
   }
-  #bigFilter,
-  #littleFilter {
+  #bigFilter {
+    z-index: 9999;
     &:hover {
       .arrow-btn {
         color: white;
@@ -705,7 +728,7 @@ export default {
     padding: 10px;
     background-color: var(--brand-color) !important;
     height: 100%;
-    width: var(--bigFilter-width);
+    // width: var(--bigFilter-width);
     position: absolute;
     .arrow-btn {
       background-color: var(--brand-color);
@@ -817,6 +840,7 @@ export default {
     }
   }
   #bigFilter {
+    transition: 0.4s;
     &:hover {
       .hamburger {
         i {
@@ -826,6 +850,7 @@ export default {
     }
   }
   #library-content {
+    transition: 0.4s;
     .arrow-btn {
       &:hover {
         animation: rightLeft 0.5s linear alternate infinite;
@@ -979,6 +1004,15 @@ export default {
           background-color: pink !important;
         }
       }
+    }
+    .form-search-container {
+      @media (max-width: 991px) {
+        margin-top: 10px;
+        form {
+          margin: auto;
+        }
+      }
+      margin-top: 0px;
     }
   }
 }

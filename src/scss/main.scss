@@ -4,6 +4,7 @@
 @use './layout/footer' ;
 @use './helpers/mixin' as *;
 
+
 #mosque{
     @include breakpoint(sm) {
         display: flex;

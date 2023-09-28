@@ -1,9 +1,6 @@
 <template>
-  <div id="app">
-    <navbar v-if="shouldShowNavBar" />
-    <upnavbar v-if="shouldShowUpNavBar" />
-    <!-- <navintern v-if="shouldShowNavIntern" /> -->
-    <div class="NavInter sticky-top" v-if="shouldShowNavIntern">
+  <div>
+    <div class="NavInter">
       <nav class="navbar navbar-expand-lg sticky-top bg-body-tertiary scrolled">
         <div class="container">
           <router-link to="/" exact>
@@ -143,16 +140,11 @@
         </div>
       </nav>
     </div>
-    <router-view />
-    <FooterView />
   </div>
 </template>
 <script>
 import { infosGenerales } from "@/Js/CartWishlist";
 import { AccountsData } from "@/Js/Accounts";
-// import { reactive } from "vue";
-// import { $ref } from "vue/macros";
-// import { toRefs, reactive } from "vue";
 function debounce(func, delay) {
   let timeoutId;
   return function () {
@@ -161,51 +153,7 @@ function debounce(func, delay) {
   };
 }
 
-import navbar from "@/components/global/NavbarView.vue";
-import FooterView from "@/components/global/FooterView.vue";
-import upnavbar from "@/components/global/UpNavbarView.vue";
-// import navintern from "@/components/NavInterView.vue";
-const routesWithSidebarAndNavbar = ["/Acceuil/arrissala", "/"];
-const routesWithUpNavbar = ["/Acceuil/arrissala/LivresHistoires"];
-const routesWithNavIntern = ["/Acceuil/arrissala/LivresHistoires"];
 export default {
-  components: {
-    navbar,
-    FooterView,
-    upnavbar,
-  },
-  data() {
-    return {
-      infosGenerales: infosGenerales,
-      AccountsData,
-    };
-  },
-  computed: {
-    shouldShowNavBar() {
-      return routesWithSidebarAndNavbar.includes(this.$route.path);
-    },
-    shouldShowUpNavBar() {
-      return routesWithUpNavbar.includes(this.$route.path);
-    },
-    shouldShowNavIntern() {
-      return routesWithNavIntern.includes(this.$route.path);
-    },
-    handleScrollDebounced() {
-      return debounce(this.handleScroll, 70);
-    },
-  },
-  directives: {
-    font: {
-      bind(el, binding) {
-        el.style.fontSize = binding.value + "px";
-      },
-    },
-    height: {
-      bind(el, binding) {
-        el.style.height = binding.value + "px";
-      },
-    },
-  },
   watch: {
     // Watch for changes in cartCount
     "infosGenerales.cartCount": function (newCount, oldCount) {
@@ -214,28 +162,20 @@ export default {
         this.playCartSound();
       }
     },
-    "infosGenerales.wishlistCount": function (newCount, oldCount) {
-      // Add debugging statements here to see the changes
-      console.log(
-        "Wishlist Count Changed: New Count:",
-        newCount,
-        "Old Count:",
-        oldCount
-      );
-    },
+  },
+  data() {
+    return {
+      infosGenerales,
+      AccountsData,
+    };
   },
   mounted() {
-    if (this.shouldShowNavIntern) {
-      // Replace the original event listener with the debounced version
-      window.addEventListener("scroll", this.handleScrollDebounced);
-      console.log(this.infosGenerales); // Add this line to check the initial values
-    }
+    // Replace the original event listener with the debounced version
+    window.addEventListener("scroll", this.handleScrollDebounced);
   },
   beforeUnmount() {
-    if (this.shouldShowNavIntern) {
-      // Remove the debounced event listener on component destruction
-      window.removeEventListener("scroll", this.handleScrollDebounced);
-    }
+    // Remove the debounced event listener on component destruction
+    window.removeEventListener("scroll", this.handleScrollDebounced);
   },
   methods: {
     playCartSound() {
@@ -243,58 +183,33 @@ export default {
       this.$refs.coinSound.play();
     },
     handleScroll() {
-      console.log(scrollY);
-      // var nav = document.querySelector("nav");
-      const navbar = document.querySelector(".NavInter");
-      console.log(navbar);
-      if (window.scrollY >= 47) {
+      var nav = document.querySelector("nav");
+      var navbar = document.querySelector(".NavInter");
+      var RechercheGenerale = document.getElementById("rechercheGenerale");
+      if (window.scrollY >= 50) {
         navbar.classList.add("navModification");
+        navbar.classList.add("sticky-top");
+        console.log(scrollY);
+        nav.classList.add("sticky-top");
+        nav.classList.add("bg-body-tertiary");
       } else {
         navbar.classList.remove("navModification");
       }
+      console.log(RechercheGenerale);
     },
   },
-  // setup() {
-  //   // Create a reactive object for infosGenerales
-  //   let infosGeneraless = reactive(this.infosGenerales);
-
-  //   // Return a ref for each property of infosGenerales
-  //   return toRefs(infosGeneraless);
-  // },
+  computed: {
+    //Create a computed property that holds the debounced version of handleScroll
+    handleScrollDebounced() {
+      return debounce(this.handleScroll, 70);
+    },
+  },
 };
 </script>
-<style lang="scss">
-$custom-transition-delay: 0.4s; // You can adjust the value as needed
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-.swiper-button-next {
-  background-color: #ff6600; /* Change the background color */
-  color: #fff; /* Change the text color */
-  font-size: 20px; /* Change the font size */
-  /* Add any other styling you want */
-}
+<style lang="scss" scoped>
 .NavInter {
-  transition: $custom-transition-delay ease-in-out;
   .duplicated-button {
-    transition: $custom-transition-delay ease-in-out;
+    transition: $transitionChosen;
     flex: 1;
     @media (max-width: 991px) {
       display: none;
@@ -309,28 +224,25 @@ nav {
   background-color: white;
   .navbar {
     .container {
-      transition: $custom-transition-delay ease-in-out;
+      transition: $transitionChosen;
       flex-wrap: nowrap !important;
       gap: 4px;
     }
   }
   nav {
-    transition: $custom-transition-delay ease-in-out;
+    transition: $transitionChosen;
     background: white;
     transition: 1s;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.08);
     ul {
-      transition: $custom-transition-delay ease-in-out;
-      li {
-        transition: $custom-transition-delay ease-in-out;
-      }
+      transition: $transitionChosen;
     }
   }
   .logo {
     max-height: 50.43px;
   }
   form {
-    transition: $custom-transition-delay ease-in-out;
+    transition: $transitionChosen;
     input[type="search"] {
       border-radius: 6px;
       width: 250px;
@@ -387,7 +299,7 @@ nav {
 
 .navModification {
   nav {
-    transition: $custom-transition-delay ease-in-out;
+    transition: $transitionChosen;
     a {
       display: none;
     }
@@ -401,8 +313,7 @@ nav {
       }
     }
     ul {
-      width: 100%;
-      justify-content: space-around;
+      margin: auto;
     }
   }
 }

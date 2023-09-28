@@ -4,8 +4,11 @@ export const livresData = {
   library: "Arrissala",
   name: "livres",
   arrow: "Livres & Histoires",
+  //how many livres are chosen from this library
   cartCount: 0,
+  //how many wishlist from livres in this library
   WishlistCount: 0,
+  //total price of livres in this library
   totalPrice: 0,
   wishlistBooks: [],
   books: [
@@ -425,45 +428,44 @@ export const livresData = {
     },
   ],
 };
+// Function to add or remove a book to/from the cart with optional quantity
 export function addToCart(book, quantity) {
-  if (quantity === null) {
-    if (!book.addedToCart) {
-      livresData.totalPrice =
-        parseFloat(book.price) + parseFloat(livresData.totalPrice);
-      livresData.cartCount++;
-      // Additional logic or actions when a book is added to the cart
-      setCookie(`addedToCart_${book.id}`, "true", 2);
-    } else {
-      livresData.totalPrice =
-        parseFloat(livresData.totalPrice) - parseFloat(book.price);
-      livresData.cartCount--;
-      // Additional logic or actions when a book is removed from the cart
-      setCookie(`addedToCart_${book.id}`, "false", 2);
-    }
-
-    addToCartGeneral(book, null);
-  } else {
-    if (!book.addedToCart) {
-      livresData.totalPrice =
-        parseFloat(book.price) * quantity + parseFloat(livresData.totalPrice);
-      livresData.cartCount++;
-      // Additional logic or actions when a book is added to the cart
-      setCookie(`addedToCart_${book.id}`, "true", 2);
-    } else {
-      livresData.totalPrice =
-        parseFloat(livresData.totalPrice) - parseFloat(book.price) * quantity;
-      livresData.cartCount--;
-      // Additional logic or actions when a book is removed from the cart
-      setCookie(`addedToCart_${book.id}`, "false", 2);
-    }
-    addToCartGeneral(book, quantity);
-  }
-
+  // quantity null means unprovided means 1
+  const realQuantity = quantity === null ? 1 : quantity;
+  livresData.totalPrice += addToCart
+    ? -parseFloat(book.price) * realQuantity
+    : parseFloat(book.price) * realQuantity;
+  livresData.cartCount += addToCart ? -1 : 1;
+  setCookie(`addedToCart_${book.id}`, !addToCart, 2);
+  addToCartGeneral(book, quantity);
+  // Toggle whether the book is added to the cart
   book.addedToCart = !book.addedToCart;
 }
-export function addToWishlist(book) {
+// export function addToWishlist(book) {
+//   if (!book.addedToWishlist) {
+//     livresData.WishlistCount++;
+//     console.log(livresData.WishlistCount, "livresData.WishlistCount++");
+//     livresData.wishlistBooks.push(book);
+//     setCookie(`addedToWishlist_${book.id}`, "true", 7);
+//   } else {
+//     livresData.WishlistCount--;
+//     const index = livresData.wishlistBooks.findIndex(
+//       (item) => item.id == book.id
+//     );
+//     if (index !== -1) {
+//       livresData.wishlistBooks.splice(index, 1);
+//     }
+//     setCookie(`addedToWishlist_${book.id}`, "false", 7);
+//   }
+
+//   // Toggle whether the book is added to the wishlist
+//   book.addedToWishlist = !book.addedToWishlist; // Move this line inside the if-else block
+//   addToWishlistGeneral(book);
+// }
+export async function addToWishlist(book) {
   if (!book.addedToWishlist) {
     livresData.WishlistCount++;
+    console.log(livresData.WishlistCount, "livresData.WishlistCount++");
     livresData.wishlistBooks.push(book);
     setCookie(`addedToWishlist_${book.id}`, "true", 7);
   } else {
@@ -471,10 +473,12 @@ export function addToWishlist(book) {
     const index = livresData.wishlistBooks.findIndex(
       (item) => item.id == book.id
     );
-    livresData.wishlistBooks.splice(index, 1);
+    if (index !== -1) {
+      livresData.wishlistBooks.splice(index, 1);
+    }
     setCookie(`addedToWishlist_${book.id}`, "false", 7);
   }
-
+  // Toggle whether the book is added to the wishlist
+  book.addedToWishlist = !book.addedToWishlist; // Move this line inside the if-else block
   addToWishlistGeneral(book);
-  book.addedToWishlist = !book.addedToWishlist;
 }

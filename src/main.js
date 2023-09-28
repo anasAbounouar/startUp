@@ -10,6 +10,7 @@ import "./scss/framework.css";
 import "swiper/element/css/pagination";
 import "swiper/element/css/navigation";
 import "swiper/element/css/scrollbar";
+// import "./tail.css";
 import "./scss/main.css";
 
 createApp(App).use(store).use(router).mount("#app");

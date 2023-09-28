@@ -155,10 +155,4 @@ export default {
     }
   }
 }
-@media (max-width: 991px) {
-  .col-sm-md-12 {
-    flex: 0 0 auto !important;
-    width: 100% !important;
-  }
-}
 </style>
