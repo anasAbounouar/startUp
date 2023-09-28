@@ -61,7 +61,6 @@ export default {
       large: "true",
       infosGenerales,
       sideBarClicked: true,
-      receivedData: "lalala",
     };
   },
   methods: {
@@ -89,6 +88,7 @@ export default {
   mounted() {
     this.showTab();
     window.addEventListener("resize", this.showTab);
+    eventBus.value.dataToTransfer=this.sideBarClicked;
   },
   beforeUnmount() {
     // Remove the event listener when the component is unmounted

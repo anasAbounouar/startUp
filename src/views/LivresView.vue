@@ -582,9 +582,15 @@ export default {
     },
     libraryContentStyle() {
       if (this.sideBarClicked) {
-        return {
-          marginLeft: "62px",
-        };
+        if (window.innerWidth < 767) {
+          return {
+            marginLeft: "0px",
+          };
+        } else {
+          return {
+            marginLeft: "62px",
+          };
+        }
       } else {
         return {
           marginLeft: "var(--bigFilter-width)",
@@ -664,7 +670,11 @@ export default {
     //   this.receivedData = data;
     // });
     if (this.sideBarClicked) {
-      document.getElementById("bigFilter").style.width = "62px";
+      if (window.innerWidth < 767) {
+        document.getElementById("bigFilter").style.display = "0px";
+      } else {
+        document.getElementById("bigFilter").style.width = "62px";
+      }
       document.getElementById("langue").style.display = "none";
       document.getElementById("niveau").style.display = "none";
       document.querySelector(".hamburger").style.margin = "auto!important";
@@ -680,6 +690,7 @@ export default {
       document.getElementById("langue").style.display = "block";
       document.getElementById("niveau").style.display = "block";
     }
+    this.receivedData;
   },
 };
 </script>

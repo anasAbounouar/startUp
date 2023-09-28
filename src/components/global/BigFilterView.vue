@@ -133,8 +133,15 @@ export default {
     toggleSidebar() {
       this.sideBarClicked = !this.sideBarClicked;
       this.$emit("update:sideBarClicked", this.sideBarClicked);
+      this.receivedData = this.sideBarClicked;
       if (this.sideBarClicked === true) {
-        document.getElementById("bigFilter").style.width = "62px";
+        const screen = window.innerWidth;
+        if (screen < 767) {
+          document.getElementById("bigFilter").style.width = "10px";
+        } else {
+          document.getElementById("bigFilter").style.width = "62px";
+        }
+
         document.getElementById("langue").style.display = "none";
         document.getElementById("niveau").style.display = "none";
         document.querySelector(".hamburger").style.margin = "auto!important";
@@ -150,7 +157,6 @@ export default {
         document.getElementById("langue").style.display = "block";
         document.getElementById("niveau").style.display = "block";
       }
-      this.receivedData = this.sideBarClicked;
     },
     // Emit events when selectedLanguage or selectedBebe change
     updateSelectedLanguage() {
@@ -195,11 +201,8 @@ export default {
     },
   },
   watch: {
-    sideBarClicked() {
-      this.receivedData = this.sideBarClicked;
-    },
     receivedData() {
-      this.sideBarClicked = this.receivedData;
+      this.toggleSidebar();
     },
   },
 };
