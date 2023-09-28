@@ -727,12 +727,20 @@ export default {
     }
     padding: 10px;
     background-color: var(--brand-color) !important;
-    height: 100%;
+    // height: 100%;
     // width: var(--bigFilter-width);
-    position: absolute;
     .arrow-btn {
       background-color: var(--brand-color);
       right: -20px;
+    }
+    height: 100%;
+    position: absolute;
+    @media (min-width: 991px) {
+      position: fixed;
+      top: calc(var(--upNavbar-height) + var(--NavInter-height));
+      left: 0px;
+      bottom: 0px;
+      overflow-y: auto;
     }
     #niveau {
       select:focus {

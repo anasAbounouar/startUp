@@ -292,6 +292,7 @@ nav {
   /* Add any other styling you want */
 }
 .NavInter {
+  z-index: 99999999 !important;
   transition: $custom-transition-delay ease-in-out;
   .duplicated-button {
     transition: $custom-transition-delay ease-in-out;

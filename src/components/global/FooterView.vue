@@ -88,8 +88,15 @@
     >
       <li class="nav-item">
         <a class="nav-link wishlist p-relative" aria-current="page" href="#">
-          <div class="wishlist-counter">0</div>
-          <i class="fa-regular fa-heart"></i
+          <div class="wishlist-counter">{{ infosGenerales.wishlistCount }}</div>
+          <i
+            class="fa-regular fa-heart"
+            v-if="infosGenerales.wishlistCount === 0"
+          ></i>
+          <i
+            class="fa-solid fa-heart"
+            v-if="infosGenerales.wishlistCount !== 0"
+          ></i
         ></a>
       </li>
       <li class="nav-item">
@@ -99,7 +106,9 @@
       </li>
       <li class="nav-item">
         <a class="nav-link p-relative shop" href="#"
-          ><div class="p-absolute shop-counter">0</div>
+          ><div class="p-absolute shop-counter">
+            {{ infosGenerales.cartCount }}
+          </div>
           <i class="fa-solid fa-cart-shopping"></i
         ></a>
       </li>
@@ -107,12 +116,14 @@
   </div>
 </template>
 <script>
+import { infosGenerales } from "@/Js/CartWishlist";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "footer",
   data() {
     return {
       large: "true",
+      infosGenerales,
     };
   },
   methods: {
@@ -258,6 +269,7 @@ footer {
   }
 }
 ul {
+  z-index: 999999999;
   li {
     font-size: 24px;
     .fa-user {
