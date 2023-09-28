@@ -1,7 +1,7 @@
 <template>
   <div>
     <section id="intern" class="p-relative pb-4">
-      <div id="bigFilter" v-if="!isSidebarHidden" class="p-relative">
+      <!-- <div id="bigFilter" class="p-relative">
         <button class="hamburger" @click="sideBarClicked = !sideBarClicked">
           <span>
             <i class="fa-solid fa-bars"></i>
@@ -90,7 +90,17 @@
             </option>
           </select>
         </div>
-      </div>
+      </div> -->
+      <BigFilter
+        v-model:selectedLanguage="selectedLanguage"
+        v-model:selectedBebe="selectedBebe"
+        v-model:selectedPrimaire="selectedPrimaire"
+        v-model:selectedCollege="selectedCollege"
+        v-model:selectedLycee="selectedLycee"
+        v-mode:sideBarClicked="sideBarClicked"
+        :sideBarClicked="sideBarClicked"
+        @update:sideBarClicked="updateSideBarClicked"
+      />
       <div id="library-content" :style="libraryContentStyle">
         <!-- {{ this.infosGenerales.wishlistCount }} -->
         <div class="container">
@@ -118,7 +128,7 @@
               <span class="ms-2">{{ arrow }}</span>
             </div>
             <div class="col-sm-md-12 col-6">
-              <h6 class="fw-bold">Changer la categorie</h6>
+              <h6 class="fw-bold">Changer la categorie {{ receivedData }}</h6>
               <form action="" class="m-auto">
                 <select
                   v-model="selectedCategorie"
@@ -400,10 +410,13 @@
   </div>
 </template>
 <script>
+import { eventBus } from "@/event-bus.js";
+import BigFilter from "@/components/global/BigFilterView.vue";
 import { getCookie } from "@/Js/cookieUtils";
 import { mapActions } from "vuex"; // Assuming you are using Vuex for managing state
 import { register } from "swiper/element/bundle";
 import { infosGenerales } from "@/Js/CartWishlist";
+// import { eventBus } from "@/main.js";
 register();
 import {
   livresData,
@@ -412,6 +425,9 @@ import {
 } from "@/views/ArrissalaFolder/livres.js";
 export default {
   name: "arrissala-books",
+  components: {
+    BigFilter,
+  },
   data() {
     return {
       infosGenerales,
@@ -476,11 +492,22 @@ export default {
         }
       }
     },
+    updateSideBarClicked(value) {
+      this.sideBarClicked = value; // Update the parent data property
+    },
   },
   created() {
     this.loadBookData();
+    // eventBus.$on("equalizer-clicked", (value) => {
+    //   this.sideBarClicked = value; // Update the variable
+    // });
   },
   computed: {
+    receivedData() {
+      console.log(eventBus.value.dataToTransfer, "event buuuus");
+      // Access the data from the event bus
+      return eventBus.value.dataToTransfer;
+    },
     languageFilter() {
       if (this.selectedLanguage === "0") {
         return this.livresData.books;
@@ -556,7 +583,7 @@ export default {
     libraryContentStyle() {
       if (this.sideBarClicked) {
         return {
-          marginLeft: "50px",
+          marginLeft: "62px",
         };
       } else {
         return {
@@ -603,34 +630,45 @@ export default {
         this.showRemainingBooks = true;
       }
     },
-    sideBarClicked() {
-      if (this.sideBarClicked === true) {
-        document.getElementById("bigFilter").style.width = "50px";
-        document.getElementById("langue").style.display = "none";
-        document.getElementById("niveau").style.display = "none";
-      } else if (this.sideBarClicked === false) {
-        const screen = window.innerWidth;
-        if (screen < 767) {
-          document.getElementById("bigFilter").style.width = "100%";
-        } else {
-          document.getElementById("bigFilter").style.width =
-            "var(--bigFilter-width)";
-        }
+    // sideBarClicked() {
+    //   if (this.sideBarClicked === true) {
+    //     document.getElementById("bigFilter").style.width = "50px";
+    //     document.getElementById("langue").style.display = "none";
+    //     document.getElementById("niveau").style.display = "none";
+    //   } else if (this.sideBarClicked === false) {
+    //     const screen = window.innerWidth;
+    //     if (screen < 767) {
+    //       document.getElementById("bigFilter").style.width = "100%";
+    //     } else {
+    //       document.getElementById("bigFilter").style.width =
+    //         "var(--bigFilter-width)";
+    //     }
 
-        document.getElementById("langue").style.display = "block";
-        document.getElementById("niveau").style.display = "block";
-      }
+    //     document.getElementById("langue").style.display = "block";
+    //     document.getElementById("niveau").style.display = "block";
+    //   }
+    // },
+    sideBarClicked() {
+      this.receivedData = this.sideBarClicked;
+    },
+    receivedData() {
+      this.sideBarClicked = this.receivedData;
     },
   },
   mounted() {
     // this.logInfosGenerales = setInterval(() => {
     //   console.log(this.infosGenerales.wishlistCount);
     // }, 3000); // 3000 milliseconds = 3 seconds
-    if (this.sideBarClicked === true) {
-      document.getElementById("bigFilter").style.width = "50px";
+    // Listen for the event and update receivedData when it's emitted
+    // eventBus.$on("data-to-transfer", (data) => {
+    //   this.receivedData = data;
+    // });
+    if (this.sideBarClicked) {
+      document.getElementById("bigFilter").style.width = "62px";
       document.getElementById("langue").style.display = "none";
       document.getElementById("niveau").style.display = "none";
-    } else if (this.sideBarClicked === false) {
+      document.querySelector(".hamburger").style.margin = "auto!important";
+    } else if (!this.sideBarClicked) {
       const screen = window.innerWidth;
       if (screen < 767) {
         document.getElementById("bigFilter").style.width = "100%";
@@ -733,13 +771,14 @@ export default {
       background-color: var(--brand-color);
       right: -20px;
     }
-    height: 100%;
     position: absolute;
-    @media (min-width: 991px) {
+    height: 100%;
+    @media (min-width: 992px) {
       position: fixed;
       top: calc(var(--upNavbar-height) + var(--NavInter-height));
       left: 0px;
       bottom: 0px;
+      height: auto;
       overflow-y: auto;
     }
     #niveau {

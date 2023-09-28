@@ -10,7 +10,8 @@ import "./scss/framework.css";
 import "swiper/element/css/pagination";
 import "swiper/element/css/navigation";
 import "swiper/element/css/scrollbar";
+// import Vue from "vue";
 // import "./tail.css";
 import "./scss/main.css";
-
+// export const eventBus = new Vue();
 createApp(App).use(store).use(router).mount("#app");

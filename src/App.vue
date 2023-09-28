@@ -145,10 +145,12 @@
     </div>
     <router-view />
     <FooterView />
+    <downNav />
   </div>
 </template>
 <script>
 import { infosGenerales } from "@/Js/CartWishlist";
+import downNav from "@/components/DownNavView.vue";
 import { AccountsData } from "@/Js/Accounts";
 // import { reactive } from "vue";
 // import { $ref } from "vue/macros";
@@ -173,6 +175,7 @@ export default {
     navbar,
     FooterView,
     upnavbar,
+    downNav,
   },
   data() {
     return {
