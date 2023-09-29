@@ -77,6 +77,8 @@ export default {
   },
   methods: {
     goToPage(pageSrc) {
+      console.log("im doing gotopage name pageSrc", pageSrc);
+      console.log("this.$route.params.nom", this.$route.params.nom);
       this.$router.push({
         name: "livres-page",
         params: { name: this.name, type: pageSrc },
@@ -87,6 +89,7 @@ export default {
     this.libraryData = this.libraryDatas.find((ele) => {
       return ele.libraryName === this.$route.params.nom; // Assuming `libraryId` is the correct property to match
     });
+    console.log(this.libraryData, "this.libraryData");
   },
 };
 </script>

@@ -33,7 +33,7 @@ export const libraryDatas = [
     ],
   },
   {
-    libraryName: "topbleu",
+    libraryName: "aladnane",
     backgroundImage: "@/img/library-home/topBleuImage.png",
     boxes: [
       {
@@ -43,7 +43,7 @@ export const libraryDatas = [
           "Livres scolaires, manuels,  romans, poésie, livres d'activités, etc.",
         btn: "livres/histoire",
         imgSrc: require("@/img/library-home/papeterie-photo.svg"),
-        pageSrc: "/",
+        pageSrc: "LivresHistoires",
       },
       {
         id: 1,

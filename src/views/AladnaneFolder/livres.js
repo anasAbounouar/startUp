@@ -1,7 +1,7 @@
 import { addToCartGeneral, addToWishlistGeneral } from "@/Js/CartWishlist";
 import { setCookie } from "@/Js/cookieUtils";
-export const livresDataArrissala = {
-  library: "Arrissala",
+export const livresDataAladnane = {
+  library: "aladnane",
   name: "livres",
   arrow: "Livres & Histoires",
   //how many livres are chosen from this library
@@ -13,7 +13,7 @@ export const livresDataArrissala = {
   wishlistBooks: [],
   books: [
     {
-      id: 0,
+      id: 99,
       title: "Miftah al qirâ’a 1",
       level: "1 Bac",
       langue: "fr",
@@ -28,7 +28,7 @@ export const livresDataArrissala = {
       maxQuantity: 3,
     },
     {
-      id: 1,
+      id: 100,
       title: "mousaeid",
       level: "Moyenne",
       langue: "en",
@@ -43,7 +43,7 @@ export const livresDataArrissala = {
       maxQuantity: 3,
     },
     {
-      id: 2,
+      id: 101,
       title: "Prepa",
       level: "CM2",
       langue: "ar",
@@ -55,7 +55,7 @@ export const livresDataArrissala = {
       maxQuantity: 3,
     },
     {
-      id: 3,
+      id: 102,
       title: "Miftah al qirâ’a 1",
       level: "CM1",
       langue: "es",
@@ -67,7 +67,7 @@ export const livresDataArrissala = {
       maxQuantity: 3,
     },
     {
-      id: 4,
+      id: 103,
       title: "Plan comptable",
       level: "CP",
       langue: "fr",
@@ -79,7 +79,7 @@ export const livresDataArrissala = {
       maxQuantity: 3,
     },
     {
-      id: 5,
+      id: 104,
       title: "Antigone",
       level: "1 année",
       langue: "fr",
@@ -91,7 +91,7 @@ export const livresDataArrissala = {
       maxQuantity: 3,
     },
     {
-      id: 6,
+      id: 105,
       title: "Prepa",
       level: "CM2",
       langue: "fr",
@@ -103,7 +103,7 @@ export const livresDataArrissala = {
       maxQuantity: 3,
     },
     {
-      id: 7,
+      id: 106,
       title: "mousaeid",
       level: "Moyenne",
       langue: "fr",
@@ -119,7 +119,7 @@ export const livresDataArrissala = {
       maxQuantity: 3,
     },
     {
-      id: 8,
+      id: 107,
       title: "Plan comptable",
       level: "CP",
       langue: "fr",
@@ -135,7 +135,7 @@ export const livresDataArrissala = {
       maxQuantity: 3,
     },
     {
-      id: 9,
+      id: 108,
       title: "Miftah al qirâ’a 1",
       level: "Petite",
       langue: "fr",
@@ -151,7 +151,7 @@ export const livresDataArrissala = {
       maxQuantity: 3,
     },
     {
-      id: 10,
+      id: 109,
       title: "mousaeid",
       level: "Moyenne",
       langue: "en",
@@ -167,7 +167,7 @@ export const livresDataArrissala = {
       maxQuantity: 3,
     },
     {
-      id: 11,
+      id: 110,
       title: "je sais pas",
       level: "CM2",
       langue: "ar",
@@ -183,7 +183,7 @@ export const livresDataArrissala = {
       maxQuantity: 3,
     },
     {
-      id: 12,
+      id: 111,
       title: "Miftah al qirâ’a 1",
       level: "Petite",
       langue: "fr",
@@ -199,7 +199,7 @@ export const livresDataArrissala = {
       maxQuantity: 3,
     },
     {
-      id: 13,
+      id: 112,
       title: "mousaeid",
       level: "Moyenne",
       langue: "en",
@@ -215,7 +215,7 @@ export const livresDataArrissala = {
       maxQuantity: 3,
     },
     {
-      id: 14,
+      id: 113,
       title: "Prepa",
       level: "CP",
       langue: "ar",
@@ -229,7 +229,7 @@ export const livresDataArrissala = {
       addedToWishlist: false,
     },
     {
-      id: 15,
+      id: 114,
       title: "Prepa",
       level: "CM1",
       langue: "fr",
@@ -244,7 +244,7 @@ export const livresDataArrissala = {
       littleBooksCount: 3,
     },
     {
-      id: 16,
+      id: 115,
       title: "mousaeid",
       level: "CE2",
       langue: "fr",
@@ -258,7 +258,7 @@ export const livresDataArrissala = {
       addedToWishlist: false,
     },
     {
-      id: 17,
+      id: 116,
       title: "Plan comptable",
       level: "CP",
       langue: "fr",
@@ -273,7 +273,7 @@ export const livresDataArrissala = {
       littleBooksCount: 2,
     },
     {
-      id: 18,
+      id: 117,
       title: "Miftah al qirâ’a 1",
       level: "Petite",
       langue: "fr",
@@ -287,7 +287,7 @@ export const livresDataArrissala = {
       addedToWishlist: false,
     },
     {
-      id: 19,
+      id: 118,
       title: "mousaeid",
       level: "CM1",
       langue: "en",
@@ -302,7 +302,7 @@ export const livresDataArrissala = {
       littleBooksCount: 3,
     },
     {
-      id: 20,
+      id: 119,
       title: "Coucou",
       level: "CE1",
       langue: "fr",
@@ -316,7 +316,7 @@ export const livresDataArrissala = {
       addedToWishlist: false,
     },
     {
-      id: 21,
+      id: 200,
       title: "couca",
       level: "CE2",
       langue: "ar",
@@ -330,7 +330,7 @@ export const livresDataArrissala = {
       addedToWishlist: false,
     },
     {
-      id: 22,
+      id: 201,
       title: "couca",
       level: "CE1",
       langue: "ar",
@@ -344,7 +344,7 @@ export const livresDataArrissala = {
       addedToWishlist: false,
     },
     {
-      id: 23,
+      id: 202,
       title: "couca",
       level: "CE2",
       langue: "ar",
@@ -358,7 +358,7 @@ export const livresDataArrissala = {
       addedToWishlist: false,
     },
     {
-      id: 24,
+      id: 203,
       title: "couca",
       level: "CP",
       langue: "ar",
@@ -372,7 +372,7 @@ export const livresDataArrissala = {
       addedToWishlist: false,
     },
     {
-      id: 25,
+      id: 204,
       title: "couca",
       level: "CM2",
       langue: "ar",
@@ -386,7 +386,7 @@ export const livresDataArrissala = {
       addedToWishlist: false,
     },
     {
-      id: 26,
+      id: 205,
       title: "couca",
       level: "CM2",
       langue: "ar",
@@ -400,7 +400,7 @@ export const livresDataArrissala = {
       addedToWishlist: false,
     },
     {
-      id: 27,
+      id: 206,
       title: "couca",
       level: "CP",
       langue: "ar",
@@ -414,7 +414,7 @@ export const livresDataArrissala = {
       addedToWishlist: false,
     },
     {
-      id: 28,
+      id: 207,
       title: "couca",
       level: "CE2",
       langue: "ar",
@@ -429,34 +429,31 @@ export const livresDataArrissala = {
   ],
 };
 // Function to add or remove a book to/from the cart with optional quantity
-export function addToCartLivresDataArrissala(book, quantity) {
+export function addToCartLivresDataAladnane(book, quantity) {
   // quantity null means unprovided means 1
   const realQuantity = quantity === null ? 1 : quantity;
-  livresDataArrissala.totalPrice += book.addedToCart
+  livresDataAladnane.totalPrice += book.addedToCart
     ? -parseFloat(book.price) * realQuantity
     : parseFloat(book.price) * realQuantity;
-  livresDataArrissala.cartCount += book.addedToCart ? -1 : 1;
+  livresDataAladnane.cartCount += book.addedToCart ? -1 : 1;
   setCookie(`addedToCart_${book.id}`, !book.addedToCart, 2);
   addToCartGeneral(book, quantity);
   // Toggle whether the book is added to the cart
   book.addedToCart = !book.addedToCart;
 }
-export async function addToWishlistLivresDataArrissala(book) {
+export async function addToWishlistLivresDataAladnane(book) {
   if (!book.addedToWishlist) {
-    livresDataArrissala.WishlistCount++;
-    console.log(
-      livresDataArrissala.WishlistCount,
-      "livresData.WishlistCount++"
-    );
-    livresDataArrissala.wishlistBooks.push(book);
+    livresDataAladnane.WishlistCount++;
+    console.log(livresDataAladnane.WishlistCount, "livresData.WishlistCount++");
+    livresDataAladnane.wishlistBooks.push(book);
     setCookie(`addedToWishlist_${book.id}`, "true", 7);
   } else {
-    livresDataArrissala.WishlistCount--;
-    const index = livresDataArrissala.wishlistBooks.findIndex(
+    livresDataAladnane.WishlistCount--;
+    const index = livresDataAladnane.wishlistBooks.findIndex(
       (item) => item.id == book.id
     );
     if (index !== -1) {
-      livresDataArrissala.wishlistBooks.splice(index, 1);
+      livresDataAladnane.wishlistBooks.splice(index, 1);
     }
     setCookie(`addedToWishlist_${book.id}`, "false", 7);
   }

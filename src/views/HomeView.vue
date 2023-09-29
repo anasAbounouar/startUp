@@ -254,7 +254,7 @@ export default {
       SelectedOption: "",
       options: [
         { label: "Arrissala", value: "arrissala", nom: "arrissala" },
-        { label: "Aladnane", value: "aladnane", nom: "arrissala" },
+        { label: "Aladnane", value: "aladnane", nom: "aladnane" },
         { label: "Top bleu", value: "topbleu", nom: "topbleu" },
         { label: "Achourok", value: "achourok", nom: "" },
       ],

@@ -168,8 +168,14 @@ import FooterView from "@/components/global/FooterView.vue";
 import upnavbar from "@/components/global/UpNavbarView.vue";
 // import navintern from "@/components/NavInterView.vue";
 const routesWithSidebarAndNavbar = ["/Acceuil/arrissala", "/"];
-const routesWithUpNavbar = ["/Acceuil/arrissala/LivresHistoires"];
-const routesWithNavIntern = ["/Acceuil/arrissala/LivresHistoires"];
+const routesWithUpNavbar = [
+  "/Acceuil/arrissala/LivresHistoires",
+  "/Acceuil/aladnane/LivresHistoires",
+];
+const routesWithNavIntern = [
+  "/Acceuil/arrissala/LivresHistoires",
+  "/Acceuil/aladnane/LivresHistoires",
+];
 export default {
   components: {
     navbar,

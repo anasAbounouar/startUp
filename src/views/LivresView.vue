@@ -71,17 +71,6 @@
                   placeholder="Chercher votre livre ici"
                 />
               </form>
-              <!-- <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span class="navbar-toggler-icon"></span>
-              </button> -->
             </div>
           </div>
           <p class="d-flex">
@@ -116,7 +105,7 @@
               v-for="book in displayedBooks"
               :key="book.id"
             >
-              <router-link :to="'/LivresHistoires/' + book.id" id="routerBox">
+              <div @click.prevent="goToPage(book.id)" id="routerBox">
                 <div class="box p-relative">
                   <div class="p-relative">
                     <div
@@ -203,7 +192,7 @@
                     </div>
                   </div>
                 </div>
-              </router-link>
+              </div>
             </div>
           </div>
           <div class="row mb-3" v-else>
@@ -216,7 +205,7 @@
               v-for="book in remainingBooks"
               :key="book.id"
             >
-              <router-link :to="'/Ecritures/' + book.id" id="routerBox">
+              <div @click.prevent="goToPage(book.id)" id="routerBox">
                 <div class="box p-relative">
                   <div class="p-relative">
                     <div
@@ -297,7 +286,7 @@
                     </div>
                   </div>
                 </div>
-              </router-link>
+              </div>
             </div>
           </div>
           <button
@@ -329,10 +318,15 @@ import { infosGenerales } from "@/Js/CartWishlist";
 // import { eventBus } from "@/main.js";
 register();
 import {
-  livresData,
-  addToCart,
-  addToWishlist,
+  livresDataArrissala,
+  addToCartLivresDataArrissala,
+  addToWishlistLivresDataArrissala,
 } from "@/views/ArrissalaFolder/livres.js";
+import {
+  livresDataAladnane,
+  addToCartLivresDataAladnane,
+  addToWishlistLivresDataAladnane,
+} from "@/views/AladnaneFolder/livres.js";
 export default {
   name: "arrissala-books",
   components: {
@@ -340,9 +334,14 @@ export default {
   },
   data() {
     return {
+      myPath: this.$route.path,
+      typeOfItems: this.$route.params.type,
+      livresArrissalaPath: "/Acceuil/arrissala/LivresHistoires",
+      livresAladnanePath: "/Acceuil/aladnane/LivresHistoires",
       infosGenerales,
       sideBarClicked: true,
-      livresData,
+      livresDataArrissala,
+      livresDataAladnane,
       searchedLocal: "",
       selectedLanguage: "0",
       selectedBebe: "",
@@ -368,13 +367,28 @@ export default {
     };
   },
   methods: {
-    addToCart,
-    addToWishlist,
+    addToCartLivresDataArrissala(item) {
+      if (this.myPath === this.livresArrissalaPath) {
+        addToCartLivresDataArrissala(item);
+      } else if (this.myPath === this.livresAladnanePath) {
+        addToCartLivresDataAladnane(item);
+      }
+    },
+    addToWishlist(item) {
+      if (this.myPath === this.livresArrissalaPath) {
+        addToWishlistLivresDataArrissala(item);
+      } else if (this.myPath === this.livresAladnanePath) {
+        addToWishlistLivresDataAladnane(item);
+      }
+      // addToWishlistLivresDataArrissala(item);
+      // Additional logic specific to addToWishlist function, if needed
+      // ...
+    },
     toggleBooks() {
       this.showRemainingBooks = !this.showRemainingBooks;
     },
     loadBookData() {
-      livresData.books.forEach((book) => {
+      this.livresData.books.forEach((book) => {
         const addedToWishlist = getCookie(`addedToWishlist_${book.id}`);
         if (addedToWishlist === "true") {
           book.addedToWishlist = true;
@@ -404,6 +418,13 @@ export default {
     },
     updateSideBarClicked(value) {
       this.sideBarClicked = value; // Update the parent data property
+    },
+    goToPage(myBookId) {
+      console.log("im executing the gotopage");
+      this.$router.push({
+        name: "item-page",
+        params: { name: "item-page", type: this.typeOfItems, itemId: myBookId },
+      });
     },
   },
   created() {
@@ -511,6 +532,14 @@ export default {
           marginLeft: "var(--bigFilter-width)",
         };
       }
+    },
+    livresData() {
+      if (this.myPath === this.livresArrissalaPath) {
+        return this.livresDataArrissala;
+      } else if (this.myPath === this.livresAladnanePath) {
+        return this.livresDataAladnane;
+      }
+      return console.log("i found no livresdata for current path");
     },
   },
   watch: {
