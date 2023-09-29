@@ -1,96 +1,6 @@
 <template>
   <div>
     <section id="intern" class="p-relative pb-4">
-      <!-- <div id="bigFilter" class="p-relative">
-        <button class="hamburger" @click="sideBarClicked = !sideBarClicked">
-          <span>
-            <i class="fa-solid fa-bars"></i>
-          </span>
-        </button>
-        <div id="langue">
-          <h4>Langue</h4>
-          <form class="d-flex flex-d-c langue">
-            <div>
-              <input
-                type="radio"
-                id="tout"
-                name="language"
-                value="0"
-                checked
-                v-model="selectedLanguage"
-              />
-              <label for="tout">Tout</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="fr"
-                name="language"
-                value="fr"
-                v-model="selectedLanguage"
-              />
-              <label for="fr">Francais</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="en"
-                name="language"
-                value="en"
-                v-model="selectedLanguage"
-              />
-              <label for="en">Anglais</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="es"
-                name="language"
-                value="es"
-                v-model="selectedLanguage"
-              />
-              <label for="es">Espanol</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="ar"
-                name="language"
-                value="ar"
-                v-model="selectedLanguage"
-              />
-              <label for="ar">Arabe</label>
-            </div>
-          </form>
-        </div>
-        <div id="niveau">
-          <h4>Niveau</h4>
-          <select v-model="selectedBebe">
-            <option value="" disabled hidden>__ P/M/G Section</option>
-            <option v-for="level in levelsBebe" :value="level" :key="level">
-              {{ level }}
-            </option>
-          </select>
-          <select v-model="selectedPrimaire" class="mt-3">
-            <option value="" disabled hidden>__Primaire</option>
-            <option v-for="level in levelsPrimaire" :value="level" :key="level">
-              {{ level }}
-            </option>
-          </select>
-          <select v-model="selectedCollege" class="mt-3">
-            <option value="" disabled hidden>__College</option>
-            <option v-for="level in levelsCollege" :value="level" :key="level">
-              {{ level }}
-            </option>
-          </select>
-          <select v-model="selectedLycee" class="mt-3">
-            <option value="" disabled hidden>__Lycee</option>
-            <option v-for="level in levelsLycee" :value="level" :key="level">
-              {{ level }}
-            </option>
-          </select>
-        </div>
-      </div> -->
       <BigFilter
         v-model:selectedLanguage="selectedLanguage"
         v-model:selectedBebe="selectedBebe"
@@ -592,6 +502,11 @@ export default {
           };
         }
       } else {
+        if (window.innerWidth < 767) {
+          return {
+            marginLeft: "0px",
+          };
+        }
         return {
           marginLeft: "var(--bigFilter-width)",
         };
@@ -636,24 +551,6 @@ export default {
         this.showRemainingBooks = true;
       }
     },
-    // sideBarClicked() {
-    //   if (this.sideBarClicked === true) {
-    //     document.getElementById("bigFilter").style.width = "50px";
-    //     document.getElementById("langue").style.display = "none";
-    //     document.getElementById("niveau").style.display = "none";
-    //   } else if (this.sideBarClicked === false) {
-    //     const screen = window.innerWidth;
-    //     if (screen < 767) {
-    //       document.getElementById("bigFilter").style.width = "100%";
-    //     } else {
-    //       document.getElementById("bigFilter").style.width =
-    //         "var(--bigFilter-width)";
-    //     }
-
-    //     document.getElementById("langue").style.display = "block";
-    //     document.getElementById("niveau").style.display = "block";
-    //   }
-    // },
     sideBarClicked() {
       this.receivedData = this.sideBarClicked;
     },
@@ -662,25 +559,20 @@ export default {
     },
   },
   mounted() {
-    // this.logInfosGenerales = setInterval(() => {
-    //   console.log(this.infosGenerales.wishlistCount);
-    // }, 3000); // 3000 milliseconds = 3 seconds
-    // Listen for the event and update receivedData when it's emitted
-    // eventBus.$on("data-to-transfer", (data) => {
-    //   this.receivedData = data;
-    // });
     if (this.sideBarClicked) {
       if (window.innerWidth < 767) {
         document.getElementById("bigFilter").style.display = "0px";
+        document.getElementById("bigFilter").style.zIndex = "-1";
       } else {
         document.getElementById("bigFilter").style.width = "62px";
       }
       document.getElementById("langue").style.display = "none";
       document.getElementById("niveau").style.display = "none";
-      document.querySelector(".hamburger").style.margin = "auto!important";
+      // document.querySelector(".hamburger").style.margin = "auto!important";
     } else if (!this.sideBarClicked) {
       const screen = window.innerWidth;
       if (screen < 767) {
+        document.getElementById("bigFilter").style.zIndex = "199";
         document.getElementById("bigFilter").style.width = "100%";
       } else {
         document.getElementById("bigFilter").style.width =
@@ -786,11 +678,12 @@ export default {
     height: 100%;
     @media (min-width: 992px) {
       position: fixed;
-      top: calc(var(--upNavbar-height) + var(--NavInter-height));
+      top: 0px;
       left: 0px;
       bottom: 0px;
       height: auto;
       overflow-y: auto;
+      padding-top: 140px;
     }
     #niveau {
       select:focus {
@@ -966,7 +859,7 @@ export default {
           padding: 1px;
           font-size: 22px;
           color: #ff0000;
-          z-index: 999;
+          z-index: 99;
           position: absolute;
           transition: 0.3s;
           &:hover {

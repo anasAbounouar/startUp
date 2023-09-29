@@ -208,6 +208,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .NavInter {
+  top: -2px !important;
   height: var(--NavInter-height);
   .duplicated-button {
     transition: $transitionChosen;

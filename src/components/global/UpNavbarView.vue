@@ -41,6 +41,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .upNavbar {
+  position: relative;
+  z-index: 999999999;
   height: var(--upNavbar-height);
   @media (max-width: 991px) {
     padding-top: 20px;
