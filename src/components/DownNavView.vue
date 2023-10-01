@@ -66,7 +66,6 @@ export default {
   methods: {
     showTab() {
       let screenWidth = window.innerWidth;
-      /* eslint-disable */console.log(...oo_oo(`2141143104_0`,screenWidth, "this is screen width"));
       if (screenWidth < 991) {
         this.large = false;
       } else {
@@ -74,11 +73,11 @@ export default {
       }
     },
     toggleSidebar() {
-         this.sideBarClicked = !this.sideBarClicked;
-     // Emit an event with the data you want to transfer
-    //   eventBus.$emit('data-to-transfer', receivedData ); // Replace someData with your actual data
-      eventBus.value.dataToTransfer=this.sideBarClicked;
-    }
+      this.sideBarClicked = !this.sideBarClicked;
+      // Emit an event with the data you want to transfer
+      //   eventBus.$emit('data-to-transfer', receivedData ); // Replace someData with your actual data
+      eventBus.value.dataToTransfer = this.sideBarClicked;
+    },
   },
   computed: {
     shouldShowEqualize() {
@@ -88,7 +87,7 @@ export default {
   mounted() {
     this.showTab();
     window.addEventListener("resize", this.showTab);
-    eventBus.value.dataToTransfer=this.sideBarClicked;
+    eventBus.value.dataToTransfer = this.sideBarClicked;
   },
   beforeUnmount() {
     // Remove the event listener when the component is unmounted
@@ -136,5 +135,4 @@ ul {
     }
   }
 }
-    
 </style>

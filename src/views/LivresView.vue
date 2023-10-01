@@ -38,7 +38,7 @@
               <span class="ms-2">{{ arrow }}</span>
             </div>
             <div class="col-sm-md-12 col-6">
-              <h6 class="fw-bold">Changer la categorie {{ receivedData }}</h6>
+              <h6 class="fw-bold">Changer la categorie</h6>
               <form action="" class="m-auto">
                 <select
                   v-model="selectedCategorie"
@@ -105,7 +105,7 @@
               v-for="book in displayedBooks"
               :key="book.id"
             >
-              <div @click.prevent="goToPage(book.id)" id="routerBox">
+              <div id="routerBox">
                 <div class="box p-relative">
                   <div class="p-relative">
                     <div
@@ -128,7 +128,10 @@
                       <span> ({{ book.littleBooksCount }}) </span>
                     </div>
                   </div>
-                  <div class="carousel-container">
+                  <div
+                    class="carousel-container"
+                    @click.prevent="goToPage(book.id)"
+                  >
                     <swiper-container
                       class="row w-full align-center justify-content-center px-4 p-relative"
                       :slides-per-view="1"
@@ -205,7 +208,7 @@
               v-for="book in remainingBooks"
               :key="book.id"
             >
-              <div @click.prevent="goToPage(book.id)" id="routerBox">
+              <div id="routerBox">
                 <div class="box p-relative">
                   <div class="p-relative">
                     <div
@@ -223,7 +226,10 @@
                     </div>
                   </div>
 
-                  <div class="carousel-container">
+                  <div
+                    class="carousel-container"
+                    @click.prevent="goToPage(book.id)"
+                  >
                     <swiper-container
                       class="row w-full align-center justify-content-center px-4 p-relative"
                       :slides-per-view="1"
@@ -636,11 +642,6 @@ export default {
       }
     }
   }
-}
-.carousel-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .owl-stage-outer {
   .owl-item.active {

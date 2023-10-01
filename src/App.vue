@@ -176,6 +176,8 @@ const routesWithNavIntern = [
   "/Acceuil/arrissala/LivresHistoires",
   "/Acceuil/aladnane/LivresHistoires",
 ];
+const namesWithNavIntern = ["item-page"];
+const namesWithUpNavbar = ["item-page"];
 export default {
   components: {
     navbar,
@@ -194,10 +196,16 @@ export default {
       return routesWithSidebarAndNavbar.includes(this.$route.path);
     },
     shouldShowUpNavBar() {
-      return routesWithUpNavbar.includes(this.$route.path);
+      return (
+        routesWithUpNavbar.includes(this.$route.path) ||
+        namesWithUpNavbar.includes(this.$route.name)
+      );
     },
     shouldShowNavIntern() {
-      return routesWithNavIntern.includes(this.$route.path);
+      return (
+        routesWithNavIntern.includes(this.$route.path) ||
+        namesWithNavIntern.includes(this.$route.name)
+      );
     },
     handleScrollDebounced() {
       return debounce(this.handleScroll, 70);
@@ -235,24 +243,27 @@ export default {
   },
   mounted() {
     if (this.shouldShowNavIntern) {
-      // Replace the original event listener with the debounced version
-      window.addEventListener("scroll", this.handleScrollDebounced);
-      console.log(this.infosGenerales); // Add this line to check the initial values
+      // Bind the event listener to the Vue instance to maintain the correct context
+      window.addEventListener("scroll", this.handleScrollDebounced.bind(this));
     }
   },
   beforeUnmount() {
     if (this.shouldShowNavIntern) {
-      // Remove the debounced event listener on component destruction
-      window.removeEventListener("scroll", this.handleScrollDebounced);
+      // Bind the event listener to the Vue instance to maintain the correct context
+      window.removeEventListener(
+        "scroll",
+        this.handleScrollDebounced.bind(this)
+      );
     }
   },
+
   methods: {
     playCartSound() {
       // Play the cart sound
       this.$refs.coinSound.play();
     },
     handleScroll() {
-      console.log(scrollY);
+      console.log(window.scrollY, " im scrolling ");
       // var nav = document.querySelector("nav");
       const navbar = document.querySelector(".NavInter");
       console.log(navbar);
