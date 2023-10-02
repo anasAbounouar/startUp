@@ -128,25 +128,25 @@
                       <span> ({{ book.littleBooksCount }}) </span>
                     </div>
                   </div>
-                  <div
-                    class="carousel-container"
-                    @click.prevent="goToPage(book.id)"
-                  >
+                  <div class="carousel-container">
                     <swiper-container
-                      class="row w-full align-center justify-content-center px-4 p-relative"
+                      class="row w-full align-center justify-content-center px-4 p-relative m-auto"
                       :slides-per-view="1"
                       :space-between="50"
-                      navigation="true"
-                      pagination="true"
-                      css-mode="true"
+                      navigation="false"
+                      pagination="false"
+                      css-mode="false"
+                      loop="true"
+                      speed="500"
+                      mousewheel-force-to-axis="true"
                     >
-                      <swiper-slide v-for="src in book.imgSrc" :key="src">
-                        <div :key="src">
-                          <img :src="src" class="mt-3" />
-                        </div>
-                      </swiper-slide>
-                      <!-- Custom navigation arrows --></swiper-container
-                    >
+                      <swiper-slide
+                        @click.prevent="goToPage(book.id)"
+                        v-for="src in book.imgSrc"
+                        :key="src"
+                      >
+                        <img :src="src" class="mt-3" /> </swiper-slide
+                    ></swiper-container>
                   </div>
                   <div class="down-actions">
                     <div
@@ -158,14 +158,14 @@
                       <div class="title">
                         {{ book.title }}
                       </div>
-                      <div class="nowprice">{{ book.price }} DH</div>
+                      <div class="nowprice c-brand">{{ book.price }} DH</div>
                     </div>
                     <div
                       class="d-flex align-center p-2 justify-content-between-flex actionPanier"
                     >
                       <button
                         class="btn btn-primary ajouter"
-                        @click.prevent="addToCart(book, null)"
+                        @click.prevent="addToCart(book, 1)"
                         :class="{
                           addedToCartClass: book.addedToCart == true,
                         }"
@@ -174,7 +174,7 @@
                           {{
                             book.addedToCart == true
                               ? "Bien ajouté &#10004;"
-                              : "+ Ajouter au panier"
+                              : "+ Ajouter au  &#128722;"
                           }}
                         </p>
                       </button>
@@ -202,8 +202,8 @@
             <div
               class="g-4 col-of-box"
               :class="{
-                'col-lg-custom col-md-3': sideBarClicked,
-                'col-lg-3 col-md-4': !sideBarClicked,
+                'col-sidebar': sideBarClicked,
+                'col-n-sidebar': !sideBarClicked,
               }"
               v-for="book in remainingBooks"
               :key="book.id"
@@ -226,25 +226,26 @@
                     </div>
                   </div>
 
-                  <div
-                    class="carousel-container"
-                    @click.prevent="goToPage(book.id)"
-                  >
+                  <div class="carousel-container">
                     <swiper-container
-                      class="row w-full align-center justify-content-center px-4 p-relative"
+                      class="row w-full align-center justify-content-center px-4 p-relative m-auto"
                       :slides-per-view="1"
                       :space-between="50"
-                      navigation="true"
-                      pagination="true"
+                      navigation="false"
+                      pagination="false"
                       css-mode="true"
+                      loop="true"
+                      speed="500"
+                      mousewheel-force-to-axis="true"
                     >
-                      <swiper-slide v-for="src in book.imgSrc" :key="src">
-                        <div :key="src">
-                          <img :src="src" class="mt-3" />
-                        </div> </swiper-slide
+                      <swiper-slide
+                        @click.prevent="goToPage(book.id)"
+                        v-for="src in book.imgSrc"
+                        :key="src"
+                      >
+                        <img :src="src" class="mt-3" /> </swiper-slide
                     ></swiper-container>
                   </div>
-
                   <div class="down-actions">
                     <div
                       class="d-flex align-items-center flex-d-c descriptionPanier"
@@ -262,7 +263,7 @@
                     >
                       <button
                         class="btn btn-primary ajouter"
-                        @click.prevent="addToCart(book, null)"
+                        @click.prevent="addToCart(book, 1)"
                         :class="{
                           addedToCartClass: book.addedToCart == true,
                         }"
@@ -271,7 +272,7 @@
                           {{
                             book.addedToCart == true
                               ? "Bien ajouté &#10004;"
-                              : "+ Ajouter au panier"
+                              : "+ Ajouter au  &#128722;"
                           }}
                         </p>
                       </button>
@@ -319,8 +320,8 @@ import { eventBus } from "@/event-bus.js";
 import BigFilter from "@/components/global/BigFilterView.vue";
 import { getCookie } from "@/Js/cookieUtils";
 import { mapActions } from "vuex"; // Assuming you are using Vuex for managing state
-import { register } from "swiper/element/bundle";
 import { infosGenerales } from "@/Js/CartWishlist";
+import { register } from "swiper/element/bundle";
 // import { eventBus } from "@/main.js";
 register();
 import {
@@ -373,11 +374,11 @@ export default {
     };
   },
   methods: {
-    addToCartLivresDataArrissala(item) {
-      if (this.myPath === this.livresArrissalaPath) {
-        addToCartLivresDataArrissala(item);
-      } else if (this.myPath === this.livresAladnanePath) {
-        addToCartLivresDataAladnane(item);
+    addToCart(item, quantity) {
+      if (this.islivresDataArrissala) {
+        addToCartLivresDataArrissala(item, quantity);
+      } else if (this.islivresDataAladnane) {
+        addToCartLivresDataAladnane(item, quantity);
       }
     },
     addToWishlist(item) {
@@ -426,7 +427,7 @@ export default {
       this.sideBarClicked = value; // Update the parent data property
     },
     goToPage(myBookId) {
-      console.log("im executing the gotopage");
+      // console.log("im executing the gotopage");
       this.$router.push({
         name: "item-page",
         params: { name: "item-page", type: this.typeOfItems, itemId: myBookId },
@@ -440,8 +441,17 @@ export default {
     // });
   },
   computed: {
+    islivresDataArrissala() {
+      return this.$route.path === `/Acceuil/arrissala/LivresHistoires`;
+    },
+    islivresDataAladnane() {
+      return this.$route.path === `/Acceuil/aladnane/LivresHistoires`;
+    },
+    // isMobile() {
+    //   console.log("window.innerWidth < 767", window.innerWidth < 767);
+    //   return window.innerWidth < 767;
+    // },
     receivedData() {
-      console.log(eventBus.value.dataToTransfer, "event buuuus");
       // Access the data from the event bus
       return eventBus.value.dataToTransfer;
     },
@@ -594,29 +604,29 @@ export default {
     },
   },
   mounted() {
-    if (this.sideBarClicked) {
-      if (window.innerWidth < 767) {
-        document.getElementById("bigFilter").style.display = "0px";
-        document.getElementById("bigFilter").style.zIndex = "-1";
-      } else {
-        document.getElementById("bigFilter").style.width = "62px";
-      }
-      document.getElementById("langue").style.display = "none";
-      document.getElementById("niveau").style.display = "none";
-      // document.querySelector(".hamburger").style.margin = "auto!important";
-    } else if (!this.sideBarClicked) {
-      const screen = window.innerWidth;
-      if (screen < 767) {
-        document.getElementById("bigFilter").style.zIndex = "199";
-        document.getElementById("bigFilter").style.width = "100%";
-      } else {
-        document.getElementById("bigFilter").style.width =
-          "var(--bigFilter-width)";
-      }
+    // if (this.sideBarClicked) {
+    //   if (window.innerWidth < 767) {
+    //     document.getElementById("bigFilter").style.display = "0px";
+    //     document.getElementById("bigFilter").style.zIndex = "-1";
+    //   } else {
+    //     document.getElementById("bigFilter").style.width = "62px";
+    //   }
+    //   document.getElementById("langue").style.display = "none";
+    //   document.getElementById("niveau").style.display = "none";
+    //   // document.querySelector(".hamburger").style.margin = "auto!important";
+    // } else if (!this.sideBarClicked) {
+    //   const screen = window.innerWidth;
+    //   if (screen < 767) {
+    //     document.getElementById("bigFilter").style.zIndex = "199";
+    //     document.getElementById("bigFilter").style.width = "100%";
+    //   } else {
+    //     document.getElementById("bigFilter").style.width =
+    //       "var(--bigFilter-width)";
+    //   }
 
-      document.getElementById("langue").style.display = "block";
-      document.getElementById("niveau").style.display = "block";
-    }
+    //   document.getElementById("langue").style.display = "block";
+    //   document.getElementById("niveau").style.display = "block";
+    // }
     this.receivedData;
   },
 };
@@ -932,6 +942,9 @@ export default {
             &::after {
               opacity: 1;
             }
+          }
+          @media (max-width: 767px) {
+            display: none;
           }
         }
         button.apercu::before {

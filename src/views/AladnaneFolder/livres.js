@@ -1,6 +1,7 @@
 import { addToCartGeneral, addToWishlistGeneral } from "@/Js/CartWishlist";
 import { setCookie } from "@/Js/cookieUtils";
-export const livresDataAladnane = {
+import { reactive } from "vue";
+export const livresDataAladnane = reactive({
   library: "aladnane",
   name: "livres",
   arrow: "Livres & Histoires",
@@ -427,11 +428,12 @@ export const livresDataAladnane = {
       addedToWishlist: false,
     },
   ],
-};
+});
 // Function to add or remove a book to/from the cart with optional quantity
 export function addToCartLivresDataAladnane(book, quantity) {
   // quantity null means unprovided means 1
   const realQuantity = quantity === null ? 1 : quantity;
+  console.log("realQuantity", realQuantity);
   livresDataAladnane.totalPrice += book.addedToCart
     ? -parseFloat(book.price) * realQuantity
     : parseFloat(book.price) * realQuantity;

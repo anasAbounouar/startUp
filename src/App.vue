@@ -260,7 +260,7 @@ export default {
   methods: {
     playCartSound() {
       // Play the cart sound
-      this.$refs.coinSound.play();
+      // this.$refs.coinSound.play();
     },
     handleScroll() {
       console.log(window.scrollY, " im scrolling ");

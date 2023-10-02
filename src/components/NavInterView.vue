@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="NavInter">
+    <div class="NavInter" :style="libraryContentStyle">
       <nav class="navbar navbar-expand-lg sticky-top bg-body-tertiary scrolled">
         <div class="container">
           <router-link to="/" exact>

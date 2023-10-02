@@ -9,28 +9,45 @@ const infosGenerales = reactive({
   panierItems: [],
 });
 // This function is used to add or remove an item from the cart with optional
-export function addToCartGeneral(itemData, quantity) {
+export function addToCartGeneral(item, quantity) {
+  console.log("addToCartGeneral(item, quantity)", item, quantity);
   // Check if the item is not already in the cart
-  if (!itemData.addedToCart) {
+  if (!item.addedToCart) {
     // Calculate the new total price by adding the item's price times quantity
     // to the existing total price, and round it to 2 decimal places
     infosGenerales.totalPrice = (
-      parseFloat(itemData.price) * quantity +
+      parseFloat(item.price) * quantity +
       parseFloat(infosGenerales.totalPrice)
     ).toFixed(2); // Round to 2 decimal places
     infosGenerales.cartCount++;
-    infosGenerales.panierItems.push(itemData);
+    infosGenerales.panierItems.push(item);
   } else {
     infosGenerales.totalPrice = (
       parseFloat(infosGenerales.totalPrice) -
-      parseFloat(itemData.price) * quantity
+      parseFloat(item.price) * quantity
     ).toFixed(2); // Round to 2 decimal places
     infosGenerales.cartCount--;
     const index = infosGenerales.panierItems.findIndex(
-      (item) => item.id == itemData.id
+      (item) => item.id == item.id
     );
     infosGenerales.panierItems.splice(index, 1);
   }
+  // book.added is reversed!
+  // infosGenerales.totalPrice += item.addedToCart
+  //   ? (-parseFloat(item.price) * quantity).toFixed(2)
+  //   : (parseFloat(item.price) * quantity).toFixed(2);
+  // console.log(
+  //   "(-parseFloat(item.price) * parseFloat(quantity)).toFixed(2)",
+  //   (-parseFloat(item.price) * parseFloat(quantity)).toFixed(2)
+  // );
+  // if (!item.addedToCart) {
+  //   infosGenerales.panierItems.push(item);
+  // } else {
+  //   const index = infosGenerales.panierItems.findIndex(
+  //     (item) => item.id == item.id
+  //   );
+  //   infosGenerales.panierItems.splice(index, 1);
+  // }
 
   Cookies.set("infosGenerales", JSON.stringify(infosGenerales));
 }

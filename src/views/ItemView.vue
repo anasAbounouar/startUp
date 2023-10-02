@@ -20,9 +20,9 @@
           />
         </svg>
         <span class="ms-2 me-2">
-          <router-link to="/LivresHistoires" class="c-black">{{
-            livresData.arrow
-          }}</router-link></span
+          <div @click.prevent="goBack()" class="c-black">
+            {{ livresData.arrow }}
+          </div></span
         >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -47,17 +47,14 @@
                 <div class="row">
                   <div class="col-sm-md-12 col-6 p-relative">
                     <div class="p-relative">
-                      <div
-                        @click.prevent="addToWishlist(book)"
-                        class="z-99 d-flex"
-                      >
+                      <div @click.prevent="addToWishlist()" class="z-99 d-flex">
                         <i
                           class="fa-regular fa-heart z-99 my-heart"
-                          v-show="!book.addedToWishlist"
+                          v-show="!this.book.addedToWishlist"
                         ></i>
                         <i
                           class="fa-solid fa-heart z-99 my-heart"
-                          v-show="book.addedToWishlist"
+                          v-show="this.book.addedToWishlist"
                         ></i>
                       </div>
                     </div>
@@ -93,18 +90,23 @@
                         class="partagerSur d-flex justify-content-between w-full px-0"
                       >
                         <li>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="33"
-                            height="32"
-                            viewBox="0 0 33 32"
-                            fill="none"
+                          <a
+                            href="https://www.facebook.com/sharer/sharer.php?u=https://getbootstrap.com/docs/5.3/components/buttons/"
+                            target="_blank"
+                            rel="noopener noreferrer"
                           >
-                            <path
-                              d="M32.1285 15.646C32.1285 7.00283 24.9385 0 16.0643 0C7.19005 0 0 7.00283 0 15.646C0 23.4551 5.87447 29.928 13.5542 31.1027V20.1688H9.47338V15.646H13.5542V12.1988C13.5542 8.27785 15.9509 6.11202 19.6217 6.11202C21.3797 6.11202 23.218 6.41737 23.218 6.41737V10.2658H21.1919C19.1968 10.2658 18.5743 11.472 18.5743 12.7092V15.646H23.0295L22.317 20.1688H18.5743V31.1027C26.254 29.928 32.1285 23.4551 32.1285 15.646Z"
-                              fill="#0000FF"
-                            />
-                          </svg>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="33"
+                              height="32"
+                              viewBox="0 0 33 32"
+                              fill="none"
+                            >
+                              <path
+                                d="M32.1285 15.646C32.1285 7.00283 24.9385 0 16.0643 0C7.19005 0 0 7.00283 0 15.646C0 23.4551 5.87447 29.928 13.5542 31.1027V20.1688H9.47338V15.646H13.5542V12.1988C13.5542 8.27785 15.9509 6.11202 19.6217 6.11202C21.3797 6.11202 23.218 6.41737 23.218 6.41737V10.2658H21.1919C19.1968 10.2658 18.5743 11.472 18.5743 12.7092V15.646H23.0295L22.317 20.1688H18.5743V31.1027C26.254 29.928 32.1285 23.4551 32.1285 15.646Z"
+                                fill="#0000FF"
+                              /></svg
+                          ></a>
                         </li>
                         <li>
                           <svg
@@ -215,23 +217,25 @@
               </div>
             </div>
             <div class="col-sm-md-12 col-6 pb-3 purchase-box p-relative">
-              <h5
-                class="d-flex"
-                :class="{
-                  'c-brand': !book.addedToCart,
-                  'c-text-lilac': book.addedToCart,
-                }"
-              >
-                {{ calculateLocalPrice }} DH
-              </h5>
+              <div class="d-flex justify-content-between align-items-center">
+                <h5
+                  class="d-flex"
+                  :class="{
+                    'c-brand': !book.addedToCart,
+                    'c-text-inside-lilac': book.addedToCart,
+                  }"
+                >
+                  {{ calculateLocalPrice }} DH
+                </h5>
 
-              <button
-                v-if="book.addedToCart == true"
-                class="btn modifier btn-primary p-absolute"
-                @click.prevent="cartButtonClicking(book, quantity)"
-              >
-                Modifier ?
-              </button>
+                <button
+                  v-show="book.addedToCart"
+                  class="btn btn-warning modifier btn-primary"
+                  @click.prevent="cartButtonClicking()"
+                >
+                  Modifier ?
+                </button>
+              </div>
               <div class="container mt-4">
                 <div class="row mt-3 align-items-end justify-content-between">
                   <div class="col-3 flex-1 p-0 pe-3">
@@ -239,37 +243,37 @@
                     <form action="" class="quantity-form">
                       <i
                         class="fa-solid fa-caret-left"
-                        @click="decrementQuantity(book)"
-                        v-if="!book.addedToCart"
+                        @click="decrementQuantity"
+                        v-if="!this.book.addedToCart"
                       ></i>
                       <input
                         type="text"
                         v-model="quantity"
                         min="1"
-                        max="10"
                         class="quantity-input"
-                        @change="handleQuantityChange(book)"
-                        :disabled="book.addedToCart"
+                        @change="handleQuantityChange"
+                        :disabled="this.book.addedToCart"
                       />
                       <i
                         class="fa-solid fa-caret-right"
-                        @click="incrementQuantity(book)"
-                        v-if="!book.addedToCart"
+                        @click="incrementQuantity()"
+                        v-if="!this.book.addedToCart"
                       ></i>
                     </form>
                   </div>
                   <div class="col-4 flex-1 mb-lg-1">
                     <button
-                      class="btn btn-primary ajouter"
-                      @click.prevent="cartButtonClicking(book, quantity)"
+                      class="btn ajouter"
+                      @click="cartButtonClicking()"
                       :class="{
-                        NotAddedToCartClass: book.addedToCart == false,
+                        'btn-primary': !this.book.addedToCart,
+                        'btn-success': this.book.addedToCart,
                       }"
-                      :disabled="book.addedToCart"
+                      :disabled="this.book.addedToCart"
                     >
                       <p class="p-0 m-0 fs-13">
                         {{
-                          book.addedToCart == true
+                          this.book.addedToCart
                             ? "Bien ajouté &#10004;"
                             : "+ Ajouter au panier"
                         }}
@@ -280,26 +284,24 @@
                     class="col-3 flex-1 d-flex align-items-center justify-content-center flex-d-c"
                   >
                     <p class="m-0 c-alt-green max-quantity">Quantité max</p>
-                    <span class="maxQuantity">{{ book.maxQuantity }}</span>
+                    <span class="maxQuantity">{{ this.book.maxQuantity }}</span>
                   </div>
                 </div>
               </div>
               <div class="metaData p-4 d-flex align-items-center flex-d-c">
-                <div class="p-relative me-auto">
+                <div class="p-relative me-auto c-black">
                   <i class="fa-solid fa-truck-fast me-3"></i>
-                  <router-link to="">
-                    <span>Quand ma commande arrivera ?</span></router-link
-                  >
+
+                  <span class="fw-bold">Quand ma commande arrivera ?</span>
                 </div>
                 <div class="p-relative me-auto">
                   <i class="fa-solid fa-shield-halved me-3"></i>
                   <span class="c-text-color">3D Secured Payment by Card</span>
                 </div>
                 <div class="p-relative me-auto">
-                  <i class="fa-regular fa-heart me-3"></i>
-                  <router-link to="">
-                    <span>Voir la liste d'envies</span></router-link
-                  >
+                  <i class="fa-regular fa-heart me-3 my-heart c-black"></i>
+
+                  <span class="fw-bold">Voir la liste d'envies</span>
                 </div>
               </div>
             </div>
@@ -371,18 +373,17 @@ export default {
     return {
       myPath: this.$route.path,
       itemId: this.$route.params.itemId,
-      book: {},
       livresDataArrissala,
       livresDataAladnane,
       quantity: 1,
+      book: {},
     };
   },
   mounted() {
-    // Find the book in the books array based on the ID
     this.book = this.livresData.books.find((book) => {
-      console.log(book.id, +this.itemId, book.id === this.itemId);
       return book.id === +this.itemId;
     });
+
     console.log("this is the book chosen", this.book);
     console.log("this is the this.itemId from path ", this.itemId);
     // Retrieve the value from the cookie
@@ -394,22 +395,22 @@ export default {
     this.book.addedToWishlist = addedToWishlistCookie === "true";
   },
   methods: {
-    addToCart(item) {
+    addToCart(item, quantity) {
       if (this.islivresDataArrissala) {
-        addToCartLivresDataArrissala(item);
+        addToCartLivresDataArrissala(item, quantity);
       } else if (this.islivresDataAladnane) {
-        addToCartLivresDataAladnane(item);
+        addToCartLivresDataAladnane(item, quantity);
       }
     },
-    addToWishlist(item) {
+    addToWishlist() {
       if (this.islivresDataArrissala) {
-        addToWishlistLivresDataArrissala(item);
+        addToWishlistLivresDataArrissala(this.book);
       } else if (this.islivresDataAladnane) {
-        addToWishlistLivresDataAladnane(item);
+        addToWishlistLivresDataAladnane(this.book);
       }
     },
-    incrementQuantity(book) {
-      if (this.quantity < book.maxQuantity)
+    incrementQuantity() {
+      if (this.quantity < this.book.maxQuantity)
         this.quantity = parseInt(this.quantity) + 1;
       else {
         return null;
@@ -417,22 +418,28 @@ export default {
     },
     decrementQuantity() {
       if (parseInt(this.quantity) > 1) {
-        this.quantity = parseInt(this.quantity) - 1;
-      } else {
-        return null;
+        this.quantity -= 1;
       }
     },
-    handleQuantityChange(book) {
-      const enteredValue = parseInt(this.quantity);
-      if (isNaN(enteredValue) || enteredValue < 1) {
+    handleQuantityChange() {
+      if (this.quantity < 1 || isNaN(this.quantity)) {
         this.quantity = 1;
-      } else if (enteredValue > book.maxQuantity) {
-        this.quantity = book.maxQuantity;
+      } else if (this.quantity > this.book.maxQuantity) {
+        this.quantity = this.book.maxQuantity;
       }
     },
-    cartButtonClicking(book, quantity) {
-      this.addToCart(book, quantity);
-      this.addedToCart = !this.addedToCart;
+    cartButtonClicking() {
+      console.log("this.quantity", this.quantity);
+      this.addToCart(this.book, this.quantity);
+    },
+    goBack() {
+      this.$router.push({
+        name: "livres-page",
+        params: {
+          nom: this.$route.params.name,
+          type: this.$route.params.type,
+        },
+      });
     },
   },
   computed: {
@@ -440,14 +447,6 @@ export default {
       return (this.book.price * this.quantity).toFixed(2);
     },
     islivresDataArrissala() {
-      //   console.log(
-      //     " real path is : ",
-      //     this.$route.path,
-      //     "and the expected is ",
-      //     `Acceuil/arrissala/LivresHistoires/${this.itemId}`,
-      //     "equality is ",
-      //     this.$route.path === `/Acceuil/arrissala/LivresHistoires/${this.itemId}`
-      //   );
       return (
         this.$route.path === `/Acceuil/arrissala/LivresHistoires/${this.itemId}`
       );
@@ -487,6 +486,7 @@ export default {
   .my-heart {
     color: red;
     font-size: 21px;
+    cursor: pointer;
   }
   .bookPath {
     display: flex;
@@ -549,6 +549,13 @@ export default {
         border-radius: 5px;
         margin: 10px 0;
         transition: 0.3s;
+      }
+      .metaData {
+        > div {
+          margin-right: auto;
+          margin-bottom: 10px;
+          cursor: pointer;
+        }
       }
     }
     .details-li {

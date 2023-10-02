@@ -179,7 +179,7 @@ textarea {
 @media  (max-width:767px) {
   .col-sidebar,.col-n-sidebar {
     flex: 0 0 auto;
-    width: 100%;
+    width: 50%;
   }
   
 }
@@ -191,4 +191,7 @@ textarea {
   .justify-content-center-sm-md {
   justify-content: center;
   }
+}
+.swiper-button-next {
+  right: 0px!important;
 }

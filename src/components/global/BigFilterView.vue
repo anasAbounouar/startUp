@@ -1,6 +1,12 @@
 <template>
-  <div id="bigFilter" class="p-relative">
-    <button class="sidebarArrow" @click.prevent="toggleSidebar">
+  <div
+    id="bigFilter"
+    class="p-relative"
+    @mouseover="sidebarHover(fase)"
+    @mouseleave="sidebarHover(true)"
+    :class="{ expanded: sideBarClicked, notExpanded: !sideBarClicked }"
+  >
+    <button class="sidebarArrow">
       <!-- <i :style="sidebarArrowRotation"
         ><svg
           width="46"
@@ -178,6 +184,36 @@ export default {
         document.getElementById("niveau").style.display = "block";
       }
     },
+    sidebarHover(bool) {
+      this.sideBarClicked = bool;
+      this.$emit("update:sideBarClicked", this.sideBarClicked);
+      this.receivedData = this.sideBarClicked;
+      if (this.sideBarClicked) {
+        const screen = window.innerWidth;
+        if (screen < 767) {
+          document.getElementById("bigFilter").style.zIndex = "-1";
+          document.getElementById("bigFilter").style.width = "0px";
+        } else {
+          document.getElementById("bigFilter").style.width = "62px";
+        }
+
+        document.getElementById("langue").style.display = "none";
+        document.getElementById("niveau").style.display = "none";
+        // document.querySelector(".hamburger").style.margin = "auto!important";
+      } else {
+        const screen = window.innerWidth;
+        if (screen < 767) {
+          document.getElementById("bigFilter").style.zIndex = "109";
+          document.getElementById("bigFilter").style.width = "100%";
+        } else {
+          document.getElementById("bigFilter").style.width =
+            "var(--bigFilter-width)";
+        }
+
+        document.getElementById("langue").style.display = "block";
+        document.getElementById("niveau").style.display = "block";
+      }
+    },
     // Emit events when selectedLanguage or selectedBebe change
     updateSelectedLanguage() {
       this.$emit("update:selectedLanguage", this.selectedLanguage);
@@ -195,15 +231,6 @@ export default {
       this.$emit("update:selectedLycee", this.selectedLycee);
     },
   },
-  //   mounted() {
-  //     // Emit an event with the initial selected language and level values when the component is mounted
-  //     this.$emit("update:selectedLanguage", this.selectedLanguage);
-  //     this.$emit("update:selectedBebe", this.selectedBebe);
-  //     this.$emit("update:selectedPrimaire", this.selectedPrimaire);
-  //     this.$emit("update:selectedCollege", this.selectedCollege);
-  //     this.$emit("update:selectedLycee", this.selectedLycee);
-  //     // ... Emit other initial values for props ...
-  //   },
   computed: {
     hamburgerStyle() {
       if (this.sideBarClicked) {
@@ -235,6 +262,32 @@ export default {
       this.toggleSidebar();
     },
   },
+  mounted() {
+    if (this.sideBarClicked) {
+      if (window.innerWidth < 767) {
+        document.getElementById("bigFilter").style.zIndex = "-1";
+        document.getElementById("bigFilter").style.display = "none";
+      } else {
+        document.getElementById("bigFilter").style.width = "62px";
+      }
+      document.getElementById("langue").style.display = "none";
+      document.getElementById("niveau").style.display = "none";
+      // document.querySelector(".hamburger").style.margin = "auto!important";
+    } else if (!this.sideBarClicked) {
+      const screen = window.innerWidth;
+      if (screen < 767) {
+        document.getElementById("bigFilter").style.zIndex = "199";
+        document.getElementById("bigFilter").style.width = "100%";
+        document.getElementById("bigFilter").style.display = "flex!important";
+      } else {
+        document.getElementById("bigFilter").style.width =
+          "var(--bigFilter-width)";
+      }
+
+      document.getElementById("langue").style.display = "block";
+      document.getElementById("niveau").style.display = "block";
+    }
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -245,7 +298,29 @@ export default {
   }
 }
 #bigFilter {
-  z-index: 999;
+  &.expanded {
+    @media (max-width: 767px) {
+      z-index: -2;
+      display: none;
+    }
+    @media (min-width: 768px) {
+      width: 62px;
+    }
+    #langue,
+    #niveau {
+      display: none;
+    }
+  }
+  &.notExpanded {
+    @media (max-width: 767px) {
+      z-index: 199;
+      width: 100%;
+      display: block;
+    }
+    @media (min-width: 768px) {
+      width: var(--bigFilter-width);
+    }
+  }
   &:hover {
     .arrow-btn {
       color: white;
@@ -373,9 +448,6 @@ export default {
   right: 6px;
   i {
     transition: 0.3s;
-  }
-  &:hover {
-    background: yellowgreen;
   }
 }
 </style>

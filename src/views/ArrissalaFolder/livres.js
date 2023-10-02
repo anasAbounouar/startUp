@@ -1,6 +1,7 @@
 import { addToCartGeneral, addToWishlistGeneral } from "@/Js/CartWishlist";
 import { setCookie } from "@/Js/cookieUtils";
-export const livresDataArrissala = {
+import { reactive } from "vue";
+const livresDataArrissala = reactive({
   library: "Arrissala",
   name: "livres",
   arrow: "Livres & Histoires",
@@ -427,7 +428,7 @@ export const livresDataArrissala = {
       addedToWishlist: false,
     },
   ],
-};
+});
 // Function to add or remove a book to/from the cart with optional quantity
 export function addToCartLivresDataArrissala(book, quantity) {
   // quantity null means unprovided means 1
@@ -464,3 +465,4 @@ export async function addToWishlistLivresDataArrissala(book) {
   book.addedToWishlist = !book.addedToWishlist; // Move this line inside the if-else block
   addToWishlistGeneral(book);
 }
+export { livresDataArrissala };
