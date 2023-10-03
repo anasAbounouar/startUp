@@ -10,8 +10,12 @@
         v-mode:sideBarClicked="sideBarClicked"
         :sideBarClicked="sideBarClicked"
         @update:sideBarClicked="updateSideBarClicked"
+        v-if="islivresDataArrissala || islivresDataAladnane"
       />
-      <div id="library-content" :style="libraryContentStyle">
+      <div
+        id="library-content"
+        :class="{ expanded: sideBarClicked, notExpanded: !sideBarClicked }"
+      >
         <!-- {{ this.infosGenerales.wishlistCount }} -->
         <div class="container">
           <div class="row justify-content-space-between pt-3">
@@ -45,9 +49,11 @@
                   class="w-full"
                   @change="navigateToPage"
                 >
-                  <option value="" disabled hidden>_Livres</option>
+                  <option value="" disabled hidden>
+                    {{ this.$route.params.type }}
+                  </option>
                   <option
-                    :value="categorie.label"
+                    :value="categorie.value"
                     v-for="(categorie, index) in categories"
                     :key="index"
                   >
@@ -330,6 +336,12 @@ import {
   addToWishlistLivresDataArrissala,
 } from "@/views/ArrissalaFolder/livres.js";
 import {
+  ecrituresDataArrissala,
+  addToCartEcrituresDataArrissala,
+  addToWishlistEcrituresDataArrissala,
+} from "@/views/ArrissalaFolder/ecritures.js";
+
+import {
   livresDataAladnane,
   addToCartLivresDataAladnane,
   addToWishlistLivresDataAladnane,
@@ -341,14 +353,16 @@ export default {
   },
   data() {
     return {
-      myPath: this.$route.path,
+      selectedCategorie: "",
       typeOfItems: this.$route.params.type,
       livresArrissalaPath: "/Acceuil/arrissala/LivresHistoires",
       livresAladnanePath: "/Acceuil/aladnane/LivresHistoires",
+      ecrituresArrissalaPath: "/Acceuil/arrissala/Ecritures",
       infosGenerales,
       sideBarClicked: true,
       livresDataArrissala,
       livresDataAladnane,
+      ecrituresDataArrissala,
       searchedLocal: "",
       selectedLanguage: "0",
       selectedBebe: "",
@@ -360,15 +374,6 @@ export default {
       levelsCollege: ["Tout", "1ère année", "2ème année", "3ème année"],
       levelsLycee: ["Tout", "Tranc Commun", "1 Bac", "2 Bac"],
       arrow: "Livres & Hisotoires",
-      selectedCategorie: "",
-      categories: [
-        { label: "Ecriture", value: "Ecriture", route: "/Ecritures" },
-        {
-          label: "Organisation",
-          value: "Organisation",
-          route: "/TopBleu",
-        },
-      ],
       showRemainingBooks: true,
       isSidebarHidden: false,
     };
@@ -379,6 +384,8 @@ export default {
         addToCartLivresDataArrissala(item, quantity);
       } else if (this.islivresDataAladnane) {
         addToCartLivresDataAladnane(item, quantity);
+      } else if (this.isEcrituresDataArrissala) {
+        addToCartEcrituresDataArrissala(item, quantity);
       }
     },
     addToWishlist(item) {
@@ -386,6 +393,8 @@ export default {
         addToWishlistLivresDataArrissala(item);
       } else if (this.myPath === this.livresAladnanePath) {
         addToWishlistLivresDataAladnane(item);
+      } else if (this.myPath === this.ecrituresArrissalaPath) {
+        addToWishlistEcrituresDataArrissala(item);
       }
       // addToWishlistLivresDataArrissala(item);
       // Additional logic specific to addToWishlist function, if needed
@@ -414,13 +423,29 @@ export default {
     ...mapActions(["navigateToRoute"]), // Assuming you have a Vuex action to handle navigation
 
     navigateToPage() {
-      if (this.selectedCategorie) {
-        const selectedCategorie = this.categories.find(
-          (categorie) => categorie.value === this.selectedCategorie
-        );
-        if (selectedCategorie) {
-          this.$router.push(selectedCategorie.route);
-        }
+      if (this.selectedCategorie !== null) {
+        // const selectedCategorie = this.categories.find(
+        //   (categorie) => categorie.value === this.selectedCategorie
+        // );
+        // if (selectedCategorie) {
+        //   this.$router.push(selectedCategorie.route);
+        // }
+        // this.$router.push({
+        //   name: "livre-page",
+        //   params: {
+        //     name: this.$route.params.nom,
+        //     type: this.selectedCategorie,
+        //   },
+        // });
+        this.$router.push({
+          name: "livres-page",
+          params: {
+            name: this.$route.params.nom,
+            type: this.selectedCategorie,
+          },
+        });
+        console.log(this.$route.params.type);
+        this.updateData();
       }
     },
     updateSideBarClicked(value) {
@@ -433,6 +458,16 @@ export default {
         params: { name: "item-page", type: this.typeOfItems, itemId: myBookId },
       });
     },
+    updateData() {
+      this.mypath = this.$route.path;
+      if (this.myPath === this.livresArrissalaPath) {
+        this.livresData = this.livresDataArrissala;
+      } else if (this.myPath === this.livresAladnanePath) {
+        this.livresData = this.livresDataAladnane;
+      } else if (this.myPath === this.ecrituresArrissalaPath) {
+        this.livresData = this.ecrituresDataArrissala;
+      }
+    },
   },
   created() {
     this.loadBookData();
@@ -441,11 +476,33 @@ export default {
     // });
   },
   computed: {
+    myPath() {
+      return this.$route.path;
+    },
+    categories() {
+      const all = [
+        { label: "Ecriture", value: "Ecritures" },
+        {
+          label: "Organisation",
+          value: "Organisations",
+        },
+        {
+          label: "Livres & Histoires",
+          value: "LivresHistoires",
+        },
+      ];
+      return all.filter((element) => {
+        return element.value !== this.$route.params.type;
+      });
+    },
     islivresDataArrissala() {
-      return this.$route.path === `/Acceuil/arrissala/LivresHistoires`;
+      return this.$route.path === this.livresArrissalaPath;
+    },
+    isEcrituresDataArrissala() {
+      return this.$route.path === this.ecrituresArrissalaPath;
     },
     islivresDataAladnane() {
-      return this.$route.path === `/Acceuil/aladnane/LivresHistoires`;
+      return this.$route.path === this.livresAladnanePath;
     },
     // isMobile() {
     //   console.log("window.innerWidth < 767", window.innerWidth < 767);
@@ -527,33 +584,35 @@ export default {
         return [];
       }
     },
-    libraryContentStyle() {
-      if (this.sideBarClicked) {
-        if (window.innerWidth < 767) {
-          return {
-            marginLeft: "0px",
-          };
-        } else {
-          return {
-            marginLeft: "62px",
-          };
-        }
-      } else {
-        if (window.innerWidth < 767) {
-          return {
-            marginLeft: "0px",
-          };
-        }
-        return {
-          marginLeft: "var(--bigFilter-width)",
-        };
-      }
-    },
+    // libraryContentStyle() {
+    //   if (this.sideBarClicked) {
+    //     if (window.innerWidth < 767) {
+    //       return {
+    //         marginLeft: "0px",
+    //       };
+    //     } else {
+    //       return {
+    //         marginLeft: "62px",
+    //       };
+    //     }
+    //   } else {
+    //     if (window.innerWidth < 767) {
+    //       return {
+    //         marginLeft: "0px",
+    //       };
+    //     }
+    //     return {
+    //       marginLeft: "var(--bigFilter-width)",
+    //     };
+    //   }
+    // },
     livresData() {
       if (this.myPath === this.livresArrissalaPath) {
         return this.livresDataArrissala;
       } else if (this.myPath === this.livresAladnanePath) {
         return this.livresDataAladnane;
+      } else if (this.myPath === this.ecrituresArrissalaPath) {
+        return this.ecrituresDataArrissala;
       }
       return console.log("i found no livresdata for current path");
     },
@@ -601,6 +660,10 @@ export default {
     },
     receivedData() {
       this.sideBarClicked = this.receivedData;
+    },
+    mypath() {
+      this.updateData;
+      console.log("this.updateData", this.updateData);
     },
   },
   mounted() {
@@ -842,6 +905,22 @@ export default {
   }
   #library-content {
     transition: 0.4s;
+    &.expanded {
+      @media (max-width: 767px) {
+        margin-left: 0px;
+      }
+      @media (min-width: 768px) {
+        margin-left: 62px;
+      }
+    }
+    &.notExpanded {
+      @media (max-width: 767px) {
+        margin-left: 0px;
+      }
+      @media (min-width: 768px) {
+        margin-left: var(--bigFilter-width);
+      }
+    }
     .arrow-btn {
       &:hover {
         animation: rightLeft 0.5s linear alternate infinite;

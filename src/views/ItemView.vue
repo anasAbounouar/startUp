@@ -367,6 +367,11 @@ import {
   addToCartLivresDataAladnane,
   addToWishlistLivresDataAladnane,
 } from "@/views/AladnaneFolder/livres.js";
+import {
+  ecrituresDataArrissala,
+  addToCartEcrituresDataArrissala,
+  addToWishlistEcrituresDataArrissala,
+} from "@/views/ArrissalaFolder/ecritures.js";
 export default {
   name: "item-page",
   data() {
@@ -375,6 +380,7 @@ export default {
       itemId: this.$route.params.itemId,
       livresDataArrissala,
       livresDataAladnane,
+      ecrituresDataArrissala,
       quantity: 1,
       book: {},
     };
@@ -400,6 +406,8 @@ export default {
         addToCartLivresDataArrissala(item, quantity);
       } else if (this.islivresDataAladnane) {
         addToCartLivresDataAladnane(item, quantity);
+      } else if (this.isEcrituresDataArrissala) {
+        addToCartEcrituresDataArrissala(item, quantity);
       }
     },
     addToWishlist() {
