@@ -370,7 +370,7 @@ import {
 import {
   ecrituresDataArrissala,
   addToCartEcrituresDataArrissala,
-  addToWishlistEcrituresDataArrissala,
+  // addToWishlistEcrituresDataArrissala,
 } from "@/views/ArrissalaFolder/ecritures.js";
 export default {
   name: "item-page",
