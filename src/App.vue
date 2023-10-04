@@ -47,13 +47,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
+                <li class="nav-item" v-if="user === null">
                   <router-link
-                    to="Login"
+                    to="/Login"
                     class="nav-link align-items-center d-flex flex-d-c"
                     aria-current="page"
                     ><svg
-                      v-if="!AccountsData.isLoggedIn"
                       xmlns="http://www.w3.org/2000/svg"
                       width="25"
                       height="25"
@@ -67,15 +66,13 @@
                         stroke-width="0.84"
                       />
                     </svg>
-                    <img
-                      class="avatar"
-                      v-else
-                      :src="AccountsData.imgSrc"
-                      alt=""
-                    />
-                    <span v-if="!AccountsData.isLoggedIn"> Log In</span>
-                    <span v-else> Profile</span></router-link
-                  >
+                    <span> Log In</span>
+                  </router-link>
+                </li>
+                <li class="nav-item d-flex align-items-center" v-else>
+                  <router-link to="">
+                    <img class="rad-50 avatar mb-3" :src="user.imgSrc" alt=""
+                  /></router-link>
                 </li>
                 <li class="nav-item">
                   <router-link
@@ -107,7 +104,7 @@
                 </li>
                 <li class="nav-item">
                   <router-link
-                    to=""
+                    to="/Cart"
                     class="nav-link p-relative d-flex f-relative"
                     aria-current="page"
                   >
@@ -152,6 +149,7 @@
 import { infosGenerales } from "@/Js/CartWishlist";
 import downNav from "@/components/DownNavView.vue";
 import { AccountsData } from "@/Js/Accounts";
+import { userCart } from "@/Js/User.js";
 // import { reactive } from "vue";
 // import { $ref } from "vue/macros";
 // import { toRefs, reactive } from "vue";
@@ -190,6 +188,7 @@ export default {
     return {
       infosGenerales: infosGenerales,
       AccountsData,
+      userCart,
     };
   },
   computed: {
@@ -210,6 +209,13 @@ export default {
     },
     handleScrollDebounced() {
       return debounce(this.handleScroll, 70);
+    },
+    user() {
+      const userData = localStorage.getItem("user");
+      if (userData) {
+        return JSON.parse(userData);
+      }
+      return null; // Return null if user data is not found in localStorage
     },
   },
   directives: {
@@ -241,12 +247,16 @@ export default {
         oldCount
       );
     },
+    userCart() {
+      console.log("usercart", userCart);
+    },
   },
   mounted() {
     if (this.shouldShowNavIntern) {
       // Bind the event listener to the Vue instance to maintain the correct context
       window.addEventListener("scroll", this.handleScrollDebounced.bind(this));
     }
+    console.log(userCart);
   },
   beforeUnmount() {
     if (this.shouldShowNavIntern) {
@@ -312,6 +322,10 @@ nav {
   font-size: 20px; /* Change the font size */
   /* Add any other styling you want */
 }
+.avatar {
+  max-height: 44px;
+  border-radius: 50%;
+}
 .NavInter {
   z-index: 99999999 !important;
   transition: $custom-transition-delay ease-in-out;
@@ -321,10 +335,6 @@ nav {
     @media (max-width: 991px) {
       display: none;
     }
-  }
-  .avatar {
-    max-height: 44px;
-    border-radius: 50%;
   }
   position: relative;
   transition: 1s;
@@ -350,6 +360,9 @@ nav {
   }
   .logo {
     max-height: 50.43px;
+  }
+  .avatar {
+    max-height: 40px;
   }
   form {
     transition: $custom-transition-delay ease-in-out;

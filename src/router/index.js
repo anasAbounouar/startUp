@@ -4,6 +4,7 @@ import LibraryIntroView from "../views/LibraryIntroView.vue";
 import LivresView from "../views/LivresView.vue";
 import ItemView from "../views/ItemView.vue";
 import LoginView from "@/views/Accounts/LoginView.vue";
+import CartView from "@/views/Accounts/CartView.vue";
 const routes = [
   {
     path: "/",
@@ -14,6 +15,11 @@ const routes = [
     path: "/Login",
     name: "login-page",
     component: LoginView,
+  },
+  {
+    path: "/Cart",
+    name: "cart-page",
+    component: CartView,
   },
   // {
   //   path: "/about",

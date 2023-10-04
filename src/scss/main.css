@@ -41,6 +41,8 @@ ul li {
   --brand-color: #2196F3;
   --brand-color-weak: rgba(33, 150, 243, 0.2);
   /* Secondary Colors */
+  --ds-background-brand-bold: #0052cc;
+  --ds-background-brand-bold-hovered: #0065ff;
   --secondary-color--blue: #CFD8DC;
   --secondary-color-coral: #FFAB91;
   --secondary-color-green: #A5D6A7;

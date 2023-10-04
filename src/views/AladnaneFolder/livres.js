@@ -1,6 +1,7 @@
 import { addToCartGeneral, addToWishlistGeneral } from "@/Js/CartWishlist";
 import { setCookie } from "@/Js/cookieUtils";
 import { reactive } from "vue";
+import { userCart } from "@/Js/User";
 export const livresDataAladnane = reactive({
   library: "aladnane",
   name: "livres",
@@ -442,6 +443,7 @@ export function addToCartLivresDataAladnane(book, quantity) {
   addToCartGeneral(book, quantity);
   // Toggle whether the book is added to the cart
   book.addedToCart = !book.addedToCart;
+  userCart.aladnane.livres = livresDataAladnane; //usercart online shit
 }
 export async function addToWishlistLivresDataAladnane(book) {
   if (!book.addedToWishlist) {
@@ -462,4 +464,5 @@ export async function addToWishlistLivresDataAladnane(book) {
   // Toggle whether the book is added to the wishlist
   book.addedToWishlist = !book.addedToWishlist; // Move this line inside the if-else block
   addToWishlistGeneral(book);
+  userCart.aladnane.livres = livresDataAladnane; //usercart online shit
 }

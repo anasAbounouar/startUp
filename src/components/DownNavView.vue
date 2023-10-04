@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul
-      v-if="!large"
+      v-if="!large && !shouldNotShowDownNav"
       class="nav nav-pills fixed-bottom bg-body-tertiary d-flex justify-content-around"
     >
       <li class="nav-item">
@@ -34,10 +34,13 @@
           ></a>
         </div>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" v-if="!AccountsData.isLoggedIn">
         <div>
           <a class="nav-link" href="#"><i class="fa-regular fa-user"></i></a>
         </div>
+      </li>
+      <li v-else class="nav-item avatar">
+        <img :src="user.imgSrc" alt="" />
       </li>
       <li class="nav-item">
         <a class="nav-link p-relative shop" href="#"
@@ -54,13 +57,16 @@
 // import { eventBus } from "@/event-bus.js";
 import { eventBus } from "@/event-bus.js";
 const routesWithEqualizeAllowed = ["/Acceuil/arrissala/LivresHistoires"];
+const routesWithDownNavNotAllowed = ["/Login"];
 import { infosGenerales } from "@/Js/CartWishlist";
+import { AccountsData } from "@/Js/Accounts.js";
 export default {
   data() {
     return {
       large: "true",
       infosGenerales,
       sideBarClicked: true,
+      AccountsData,
     };
   },
   methods: {
@@ -89,6 +95,17 @@ export default {
     shouldShowEqualize() {
       return routesWithEqualizeAllowed.includes(this.$route.path);
     },
+    shouldNotShowDownNav() {
+      return routesWithDownNavNotAllowed.includes(this.$route.path);
+    },
+    user() {
+      const userData = localStorage.getItem("user");
+      if (userData) {
+        return JSON.parse(userData);
+      }
+      console.log("nouser connected");
+      return null; // Return null if user data is not found in localStorage
+    },
   },
   mounted() {
     this.showTab();
@@ -102,6 +119,16 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+  img {
+    border-radius: 50%;
+    max-width: 40px;
+  }
+}
 ul {
   z-index: 999999999;
   li {

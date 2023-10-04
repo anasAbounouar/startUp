@@ -1,6 +1,8 @@
 import { addToCartGeneral, addToWishlistGeneral } from "@/Js/CartWishlist";
 import { setCookie } from "@/Js/cookieUtils";
 import { reactive } from "vue";
+import { userCart } from "@/Js/User";
+
 const livresDataArrissala = reactive({
   library: "Arrissala",
   name: "livres",
@@ -436,7 +438,9 @@ export function addToCartLivresDataArrissala(book, quantity) {
   livresDataArrissala.totalPrice += book.addedToCart
     ? -parseFloat(book.price) * realQuantity
     : parseFloat(book.price) * realQuantity;
+  userCart.arrissala.livres.totalPrice = livresDataArrissala.totalPrice; //usercart shit online
   livresDataArrissala.cartCount += book.addedToCart ? -1 : 1;
+  userCart.arrissala.livres.cartCount = livresDataArrissala.cartCount; //usercart shit online
   setCookie(`addedToCart_${book.id}`, !book.addedToCart, 2);
   addToCartGeneral(book, quantity);
   // Toggle whether the book is added to the cart
@@ -445,10 +449,6 @@ export function addToCartLivresDataArrissala(book, quantity) {
 export async function addToWishlistLivresDataArrissala(book) {
   if (!book.addedToWishlist) {
     livresDataArrissala.WishlistCount++;
-    console.log(
-      livresDataArrissala.WishlistCount,
-      "livresData.WishlistCount++"
-    );
     livresDataArrissala.wishlistBooks.push(book);
     setCookie(`addedToWishlist_${book.id}`, "true", 7);
   } else {
@@ -464,5 +464,6 @@ export async function addToWishlistLivresDataArrissala(book) {
   // Toggle whether the book is added to the wishlist
   book.addedToWishlist = !book.addedToWishlist; // Move this line inside the if-else block
   addToWishlistGeneral(book);
+  userCart.arrissala.livres = livresDataArrissala; //usercart shit onlinee
 }
 export { livresDataArrissala };

@@ -44,13 +44,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
+                <li class="nav-item" v-if="!AccountsData.isLoggedIn">
                   <router-link
-                    to="Login"
+                    to="/Loginnnn"
                     class="nav-link align-items-center d-flex flex-d-c"
                     aria-current="page"
                     ><svg
-                      v-if="!AccountsData.isLoggedIn"
                       xmlns="http://www.w3.org/2000/svg"
                       width="25"
                       height="25"
@@ -64,15 +63,11 @@
                         stroke-width="0.84"
                       />
                     </svg>
-                    <img
-                      class="avatar"
-                      v-else
-                      :src="AccountsData.imgSrc"
-                      alt=""
-                    />
-                    <span v-if="!AccountsData.isLoggedIn"> Log In</span>
-                    <span v-else> Profile</span></router-link
-                  >
+                    <span> Log In</span>
+                  </router-link>
+                </li>
+                <li class="nav-item" v-else>
+                  <img :src="user.imgSrc" alt="" />
                 </li>
                 <li class="nav-item">
                   <router-link
@@ -104,7 +99,7 @@
                 </li>
                 <li class="nav-item">
                   <router-link
-                    to=""
+                    to="/Cart"
                     class="nav-link p-relative d-flex f-relative"
                     aria-current="page"
                   >
@@ -203,6 +198,13 @@ export default {
     handleScrollDebounced() {
       return debounce(this.handleScroll, 70);
     },
+    user() {
+      const userData = localStorage.getItem("user");
+      if (userData) {
+        return JSON.parse(userData);
+      }
+      return null; // Return null if user data is not found in localStorage
+    },
   },
 };
 </script>
@@ -216,10 +218,6 @@ export default {
     @media (max-width: 991px) {
       display: none;
     }
-  }
-  .avatar {
-    max-height: 44px;
-    border-radius: 50%;
   }
   position: relative;
   transition: 1s;

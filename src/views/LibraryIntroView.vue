@@ -22,7 +22,7 @@
           <div
             v-for="box in libraryData.boxes"
             :key="box.id"
-            class="col-sm-md-12 col-4 p-3 mt-3"
+            class="col-sm-md-12 col-4 p-3 mt-3 cursor-pointer"
           >
             <div @click.prevent="goToPage(box.pageSrc)">
               <div class="box">

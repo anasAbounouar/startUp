@@ -31,7 +31,6 @@ export const AccountsData = [
   },
   // Add more user objects as needed
 ];
-export const toggleLogin = (isLoggedIn) => {
-  isLoggedIn = !isLoggedIn;
-  AccountsData.isLoggedIn = isLoggedIn;
+export const toggleLogin = () => {
+  AccountsData.isLoggedIn = !AccountsData.isLoggedIn;
 };

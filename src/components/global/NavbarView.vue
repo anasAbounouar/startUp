@@ -44,7 +44,7 @@
             S'identifier
           </router-link>
           <a v-else class="nav-link avatar" href="#">
-            <img :src="AccountsData.imgSrc" alt="" />
+            <img :src="user.imgSrc" alt="" />
           </a>
           <a class="nav-link d-lg-flex align-items-center wtsp-hide" href="#">
             <img src="@/assets/wtsp.svg" alt="Wtsp" class="ms-1"
@@ -62,8 +62,17 @@ export default {
   name: "navbar",
   data() {
     return {
-      AccountsData: AccountsData,
+      AccountsData,
     };
+  },
+  computed: {
+    user() {
+      const userData = localStorage.getItem("user");
+      if (userData) {
+        return JSON.parse(userData);
+      }
+      return null; // Return null if user data is not found in localStorage
+    },
   },
 };
 </script>

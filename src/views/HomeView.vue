@@ -244,11 +244,13 @@ import { mapActions } from "vuex"; // Assuming you are using Vuex for managing s
 import "../scss/helpers/_mixin.scss";
 import { register } from "swiper/element/bundle";
 import { libraryDatas } from "@/Js/homePageData/libraryDatas.js";
+// import { onlineUser } from "@/Js/User.js";
 // register Swiper custom elements
 register();
 export default {
   data() {
     return {
+      // onlineUser,
       libraryDatas,
       slidesPerView: 3, // Default number of slides per view
       SelectedOption: "",
@@ -328,6 +330,15 @@ export default {
     // onSlideChange() {
     //   console.log("slide change");
     // },
+  },
+  computed: {
+    user() {
+      const userData = localStorage.getItem("user");
+      if (userData) {
+        return JSON.parse(userData);
+      }
+      return null; // Return null if user data is not found in localStorage
+    },
   },
   mounted() {
     // Detect the screen size when the component is mounted
