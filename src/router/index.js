@@ -3,11 +3,17 @@ import HomeView from "../views/HomeView.vue";
 import LibraryIntroView from "../views/LibraryIntroView.vue";
 import LivresView from "../views/LivresView.vue";
 import ItemView from "../views/ItemView.vue";
+import LoginView from "@/views/Accounts/LoginView.vue";
 const routes = [
   {
     path: "/",
     name: "home",
     component: HomeView,
+  },
+  {
+    path: "/Login",
+    name: "login-page",
+    component: LoginView,
   },
   // {
   //   path: "/about",

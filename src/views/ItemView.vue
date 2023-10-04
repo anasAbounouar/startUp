@@ -3,9 +3,9 @@
     <section id="itemView">
       <div class="container bookPath">
         <span class="me-2">
-          <router-link to="/Arrissala" class="c-black">{{
-            livresData.library
-          }}</router-link> </span
+          <div @click.prevent="goToLibrary()" class="c-black">
+            {{ livresData.library }}
+          </div> </span
         ><svg
           xmlns="http://www.w3.org/2000/svg"
           width="7"
@@ -82,7 +82,7 @@
                       <p class="m-0">
                         {{ book.level }}
                       </p>
-                      <span class="c-text-color">Ajouter votre avis</span>
+                      <!-- <span class="c-text-color">Ajouter votre avis</span> -->
                       <h5 class="c-brand">{{ book.price }} DH</h5>
                       <span v-format="13" class="SKU"> SKU: {{ book.id }}</span>
                       <span class="mb-3">Partager sur :</span>
@@ -370,7 +370,7 @@ import {
 import {
   ecrituresDataArrissala,
   addToCartEcrituresDataArrissala,
-  // addToWishlistEcrituresDataArrissala,
+  addToWishlistEcrituresDataArrissala,
 } from "@/views/ArrissalaFolder/ecritures.js";
 export default {
   name: "item-page",
@@ -406,7 +406,7 @@ export default {
         addToCartLivresDataArrissala(item, quantity);
       } else if (this.islivresDataAladnane) {
         addToCartLivresDataAladnane(item, quantity);
-      } else if (this.isEcrituresDataArrissala) {
+      } else if (this.isecrituresDataArrissala) {
         addToCartEcrituresDataArrissala(item, quantity);
       }
     },
@@ -415,6 +415,8 @@ export default {
         addToWishlistLivresDataArrissala(this.book);
       } else if (this.islivresDataAladnane) {
         addToWishlistLivresDataAladnane(this.book);
+      } else if (this.addToCartEcrituresDataArrissala) {
+        addToWishlistEcrituresDataArrissala(this.book);
       }
     },
     incrementQuantity() {
@@ -449,6 +451,14 @@ export default {
         },
       });
     },
+    goToLibrary() {
+      this.$router.push({
+        name: "library-intro",
+        params: {
+          nom: this.$route.params.nom,
+        },
+      });
+    },
   },
   computed: {
     calculateLocalPrice() {
@@ -464,6 +474,9 @@ export default {
         this.$route.path === `/Acceuil/aladnane/LivresHistoires/${this.itemId}`
       );
     },
+    isecrituresDataArrissala() {
+      return this.$route.path === `/Acceuil/arrissala/Ecritures/${this.itemId}`;
+    },
 
     livresData() {
       if (this.islivresDataArrissala) {
@@ -472,6 +485,8 @@ export default {
       } else if (this.islivresDataAladnane) {
         console.log(livresDataAladnane);
         return livresDataAladnane;
+      } else if (this.isecrituresDataArrissala) {
+        return ecrituresDataArrissala;
       }
       return console.log("i failed findin livres data , anas");
     },

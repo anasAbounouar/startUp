@@ -25,7 +25,7 @@ export const ecrituresDataArrissala = reactive({
       maxQuantity: 3,
     },
     {
-      id: 100,
+      id: 1990,
       title: "cahier 9",
       level: "Moyenne",
       imgSrc: [
@@ -406,25 +406,6 @@ export const ecrituresDataArrissala = reactive({
   ],
 });
 export function addToCartEcrituresDataArrissala(book, quantity) {
-  // if (!book.addedToCart) {
-  //   ecrituresDataArrissala.totalPrice =
-  //     parseFloat(book.price) * quantity +
-  //     parseFloat(ecrituresDataArrissala.totalPrice);
-  //   ecrituresDataArrissala.cartCount++;
-  //   setCookie(`addedToCart_${book.id}`, "true", 2);
-  // } else {
-  //   ecrituresDataArrissala.totalPrice =
-  //     parseFloat(ecrituresDataArrissala.totalPrice) -
-  //     parseFloat(book.price) * quantity;
-  //   ecrituresDataArrissala.cartCount--;
-  //   // Additional logic or actions when a book is removed from the cart
-  //   setCookie(`addedToCart_${book.id}`, "false", 2);
-  // }
-  // addToCartGeneral(book, quantity);
-
-  // book.addedToCart = !book.addedToCart;
-  // //
-  // quantity null means unprovided means 1
   const realQuantity = quantity === null ? 1 : quantity;
   ecrituresDataArrissala.totalPrice += book.addedToCart
     ? -parseFloat(book.price) * realQuantity

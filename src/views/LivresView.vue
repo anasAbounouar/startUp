@@ -14,7 +14,12 @@
       />
       <div
         id="library-content"
-        :class="{ expanded: sideBarClicked, notExpanded: !sideBarClicked }"
+        :class="{
+          expanded:
+            sideBarClicked && this.$route.params.type === 'LivresHistoires',
+          notExpanded:
+            !sideBarClicked && this.$route.params.type === 'LivresHistoires',
+        }"
       >
         <!-- {{ this.infosGenerales.wishlistCount }} -->
         <div class="container">
@@ -23,9 +28,12 @@
               class="col-sm-md-12 col-5 align-items-baseline d-flex my-3 justify-content-center-sm-md"
             >
               <span class="me-2">
-                <router-link to="/Arrissala" class="c-black"
-                  >Arrissala</router-link
-                > </span
+                <div
+                  @click.prevent="goToLibrary"
+                  class="c-black cursor-pointer"
+                >
+                  {{ livresData.library }}
+                </div> </span
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="7"
@@ -39,7 +47,7 @@
                   fill-opacity="0.77"
                 />
               </svg>
-              <span class="ms-2">{{ arrow }}</span>
+              <span class="ms-2 user-select-all c-grey">{{ arrow }}</span>
             </div>
             <div class="col-sm-md-12 col-6">
               <h6 class="fw-bold">Changer la categorie</h6>
@@ -455,7 +463,11 @@ export default {
       // console.log("im executing the gotopage");
       this.$router.push({
         name: "item-page",
-        params: { name: "item-page", type: this.typeOfItems, itemId: myBookId },
+        params: {
+          name: "item-page",
+          type: this.$route.params.type,
+          itemId: myBookId,
+        },
       });
     },
     updateData() {
@@ -467,6 +479,14 @@ export default {
       } else if (this.myPath === this.ecrituresArrissalaPath) {
         this.livresData = this.ecrituresDataArrissala;
       }
+    },
+    goToLibrary() {
+      this.$router.push({
+        name: "library-intro",
+        params: {
+          nom: this.$route.params.nom,
+        },
+      });
     },
   },
   created() {
@@ -660,6 +680,10 @@ export default {
     },
     receivedData() {
       this.sideBarClicked = this.receivedData;
+      console.log(
+        "this.sideBarClicked = this.receivedData",
+        this.sideBarClicked
+      );
     },
     mypath() {
       this.updateData;

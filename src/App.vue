@@ -170,6 +170,7 @@ import upnavbar from "@/components/global/UpNavbarView.vue";
 const routesWithSidebarAndNavbar = ["/Acceuil/arrissala", "/"];
 const routesWithUpNavbar = [
   "/Acceuil/arrissala/LivresHistoires",
+  "/Acceuil/arrissala/Ecritures",
   "/Acceuil/aladnane/LivresHistoires",
 ];
 const routesWithNavIntern = [

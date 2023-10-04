@@ -71,7 +71,8 @@ ul li {
   --contact-color: #BA68C8;
   --contact-background: #F8DEFD;
   --upNavbar-height: 47px;
-  --NavInter-height: 90px ;
+  --NavInter-height: 90px;
+  --login-bg: #D18742;
 }
 
 .c-contact {

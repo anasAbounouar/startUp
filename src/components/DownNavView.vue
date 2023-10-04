@@ -77,6 +77,12 @@ export default {
       // Emit an event with the data you want to transfer
       //   eventBus.$emit('data-to-transfer', receivedData ); // Replace someData with your actual data
       eventBus.value.dataToTransfer = this.sideBarClicked;
+      console.log(
+        "this.sideBarClicked",
+        this.sideBarClicked,
+        "eventBus.value.dataToTransfer",
+        eventBus.value.dataToTransfer
+      );
     },
   },
   computed: {

@@ -158,61 +158,63 @@ export default {
       this.sideBarClicked = !this.sideBarClicked;
       this.$emit("update:sideBarClicked", this.sideBarClicked);
       this.receivedData = this.sideBarClicked;
-      if (this.sideBarClicked === true) {
-        const screen = window.innerWidth;
-        if (screen < 767) {
-          document.getElementById("bigFilter").style.zIndex = "-1";
-          document.getElementById("bigFilter").style.width = "0px";
-        } else {
-          document.getElementById("bigFilter").style.width = "62px";
-        }
+      // if (this.sideBarClicked === true) {
+      //   const screen = window.innerWidth;
+      //   if (screen < 767) {
+      //     document.getElementById("bigFilter").style.zIndex = "-1";
+      //     document.getElementById("bigFilter").style.width = "0px";
+      //   } else {
+      //     document.getElementById("bigFilter").style.width = "62px";
+      //   }
 
-        document.getElementById("langue").style.display = "none";
-        document.getElementById("niveau").style.display = "none";
-        // document.querySelector(".hamburger").style.margin = "auto!important";
-      } else if (this.sideBarClicked === false) {
-        const screen = window.innerWidth;
-        if (screen < 767) {
-          document.getElementById("bigFilter").style.zIndex = "109";
-          document.getElementById("bigFilter").style.width = "100%";
-        } else {
-          document.getElementById("bigFilter").style.width =
-            "var(--bigFilter-width)";
-        }
+      //   document.getElementById("langue").style.display = "none";
+      //   document.getElementById("niveau").style.display = "none";
+      //   // document.querySelector(".hamburger").style.margin = "auto!important";
+      // } else if (this.sideBarClicked === false) {
+      //   const screen = window.innerWidth;
+      //   if (screen < 767) {
+      //     document.getElementById("bigFilter").style.zIndex = "109";
+      //     document.getElementById("bigFilter").style.width = "100%";
+      //     document.getElementById("bigFilter").style.display = "block";
+      //   } else {
+      //     document.getElementById("bigFilter").style.width =
+      //       "var(--bigFilter-width)";
+      //   }
 
-        document.getElementById("langue").style.display = "block";
-        document.getElementById("niveau").style.display = "block";
-      }
+      //   document.getElementById("langue").style.display = "block";
+      //   document.getElementById("niveau").style.display = "block";
+      // }
     },
     sidebarHover(bool) {
       this.sideBarClicked = bool;
       this.$emit("update:sideBarClicked", this.sideBarClicked);
       this.receivedData = this.sideBarClicked;
-      if (this.sideBarClicked) {
-        const screen = window.innerWidth;
-        if (screen < 767) {
-          document.getElementById("bigFilter").style.zIndex = "-1";
-          document.getElementById("bigFilter").style.width = "0px";
-        } else {
-          document.getElementById("bigFilter").style.width = "62px";
-        }
+      // if (this.sideBarClicked === true) {
+      //   const screen = window.innerWidth;
+      //   if (screen < 767) {
+      //     document.getElementById("bigFilter").style.zIndex = "-1";
+      //     document.getElementById("bigFilter").style.width = "0px";
+      //   } else {
+      //     document.getElementById("bigFilter").style.width = "62px";
+      //   }
 
-        document.getElementById("langue").style.display = "none";
-        document.getElementById("niveau").style.display = "none";
-        // document.querySelector(".hamburger").style.margin = "auto!important";
-      } else {
-        const screen = window.innerWidth;
-        if (screen < 767) {
-          document.getElementById("bigFilter").style.zIndex = "109";
-          document.getElementById("bigFilter").style.width = "100%";
-        } else {
-          document.getElementById("bigFilter").style.width =
-            "var(--bigFilter-width)";
-        }
+      //   document.getElementById("langue").style.display = "none";
+      //   document.getElementById("niveau").style.display = "none";
+      //   // document.querySelector(".hamburger").style.margin = "auto!important";
+      // } else if (this.sideBarClicked === false) {
+      //   const screen = window.innerWidth;
+      //   if (screen < 767) {
+      //     document.getElementById("bigFilter").style.zIndex = "109";
+      //     document.getElementById("bigFilter").style.width = "100%";
+      //     document.getElementById("bigFilter").style.display = "block";
+      //   } else {
+      //     document.getElementById("bigFilter").style.width =
+      //       "var(--bigFilter-width)";
+      //   }
 
-        document.getElementById("langue").style.display = "block";
-        document.getElementById("niveau").style.display = "block";
-      }
+      //   document.getElementById("langue").style.display = "block";
+      //   document.getElementById("niveau").style.display = "block";
+      // }
     },
     // Emit events when selectedLanguage or selectedBebe change
     updateSelectedLanguage() {
@@ -263,22 +265,24 @@ export default {
     },
   },
   mounted() {
-    if (this.sideBarClicked) {
-      if (window.innerWidth < 767) {
+    if (this.sideBarClicked === true) {
+      const screen = window.innerWidth;
+      if (screen < 767) {
         document.getElementById("bigFilter").style.zIndex = "-1";
-        document.getElementById("bigFilter").style.display = "none";
+        document.getElementById("bigFilter").style.width = "0px";
       } else {
         document.getElementById("bigFilter").style.width = "62px";
       }
+
       document.getElementById("langue").style.display = "none";
       document.getElementById("niveau").style.display = "none";
       // document.querySelector(".hamburger").style.margin = "auto!important";
-    } else if (!this.sideBarClicked) {
+    } else if (this.sideBarClicked === false) {
       const screen = window.innerWidth;
       if (screen < 767) {
-        document.getElementById("bigFilter").style.zIndex = "199";
+        document.getElementById("bigFilter").style.zIndex = "109";
         document.getElementById("bigFilter").style.width = "100%";
-        document.getElementById("bigFilter").style.display = "flex!important";
+        document.getElementById("bigFilter").style.display = "block";
       } else {
         document.getElementById("bigFilter").style.width =
           "var(--bigFilter-width)";
@@ -300,25 +304,29 @@ export default {
 #bigFilter {
   &.expanded {
     @media (max-width: 767px) {
-      z-index: -2;
-      display: none;
+      z-index: -1 !important;
+      width: 0px !important;
     }
     @media (min-width: 768px) {
-      width: 62px;
+      width: 62px !important;
     }
     #langue,
     #niveau {
-      display: none;
+      display: none !important;
     }
   }
   &.notExpanded {
     @media (max-width: 767px) {
-      z-index: 199;
-      width: 100%;
-      display: block;
+      z-index: 109 !important;
+      width: 100% !important;
+      display: block !important;
     }
     @media (min-width: 768px) {
-      width: var(--bigFilter-width);
+      width: var(--bigFilter-width) !important;
+    }
+    #langue,
+    #niveau {
+      display: block !important;
     }
   }
   &:hover {

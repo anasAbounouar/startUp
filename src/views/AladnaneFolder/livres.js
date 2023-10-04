@@ -14,7 +14,7 @@ export const livresDataAladnane = reactive({
   wishlistBooks: [],
   books: [
     {
-      id: 99,
+      id: 990,
       title: "Miftah al qirâ’a 1",
       level: "1 Bac",
       langue: "fr",
@@ -29,7 +29,7 @@ export const livresDataAladnane = reactive({
       maxQuantity: 3,
     },
     {
-      id: 100,
+      id: 1000,
       title: "mousaeid",
       level: "Moyenne",
       langue: "en",
@@ -44,7 +44,7 @@ export const livresDataAladnane = reactive({
       maxQuantity: 3,
     },
     {
-      id: 101,
+      id: 1010,
       title: "Prepa",
       level: "CM2",
       langue: "ar",
@@ -56,7 +56,7 @@ export const livresDataAladnane = reactive({
       maxQuantity: 3,
     },
     {
-      id: 102,
+      id: 1020,
       title: "Miftah al qirâ’a 1",
       level: "CM1",
       langue: "es",
@@ -68,7 +68,7 @@ export const livresDataAladnane = reactive({
       maxQuantity: 3,
     },
     {
-      id: 103,
+      id: 1030,
       title: "Plan comptable",
       level: "CP",
       langue: "fr",
@@ -80,7 +80,7 @@ export const livresDataAladnane = reactive({
       maxQuantity: 3,
     },
     {
-      id: 104,
+      id: 1040,
       title: "Antigone",
       level: "1 année",
       langue: "fr",
@@ -92,7 +92,7 @@ export const livresDataAladnane = reactive({
       maxQuantity: 3,
     },
     {
-      id: 105,
+      id: 1050,
       title: "Prepa",
       level: "CM2",
       langue: "fr",
@@ -104,7 +104,7 @@ export const livresDataAladnane = reactive({
       maxQuantity: 3,
     },
     {
-      id: 106,
+      id: 1060,
       title: "mousaeid",
       level: "Moyenne",
       langue: "fr",
@@ -120,7 +120,7 @@ export const livresDataAladnane = reactive({
       maxQuantity: 3,
     },
     {
-      id: 107,
+      id: 1070,
       title: "Plan comptable",
       level: "CP",
       langue: "fr",
@@ -136,7 +136,7 @@ export const livresDataAladnane = reactive({
       maxQuantity: 3,
     },
     {
-      id: 108,
+      id: 1080,
       title: "Miftah al qirâ’a 1",
       level: "Petite",
       langue: "fr",
@@ -152,7 +152,7 @@ export const livresDataAladnane = reactive({
       maxQuantity: 3,
     },
     {
-      id: 109,
+      id: 1090,
       title: "mousaeid",
       level: "Moyenne",
       langue: "en",
@@ -168,7 +168,7 @@ export const livresDataAladnane = reactive({
       maxQuantity: 3,
     },
     {
-      id: 110,
+      id: 1100,
       title: "je sais pas",
       level: "CM2",
       langue: "ar",
@@ -184,7 +184,7 @@ export const livresDataAladnane = reactive({
       maxQuantity: 3,
     },
     {
-      id: 111,
+      id: 1110,
       title: "Miftah al qirâ’a 1",
       level: "Petite",
       langue: "fr",
@@ -200,7 +200,7 @@ export const livresDataAladnane = reactive({
       maxQuantity: 3,
     },
     {
-      id: 112,
+      id: 1120,
       title: "mousaeid",
       level: "Moyenne",
       langue: "en",
@@ -216,7 +216,7 @@ export const livresDataAladnane = reactive({
       maxQuantity: 3,
     },
     {
-      id: 113,
+      id: 1130,
       title: "Prepa",
       level: "CP",
       langue: "ar",
@@ -230,7 +230,7 @@ export const livresDataAladnane = reactive({
       addedToWishlist: false,
     },
     {
-      id: 114,
+      id: 1140,
       title: "Prepa",
       level: "CM1",
       langue: "fr",
@@ -245,7 +245,7 @@ export const livresDataAladnane = reactive({
       littleBooksCount: 3,
     },
     {
-      id: 115,
+      id: 1150,
       title: "mousaeid",
       level: "CE2",
       langue: "fr",
@@ -259,7 +259,7 @@ export const livresDataAladnane = reactive({
       addedToWishlist: false,
     },
     {
-      id: 116,
+      id: 1160,
       title: "Plan comptable",
       level: "CP",
       langue: "fr",
@@ -274,7 +274,7 @@ export const livresDataAladnane = reactive({
       littleBooksCount: 2,
     },
     {
-      id: 117,
+      id: 1170,
       title: "Miftah al qirâ’a 1",
       level: "Petite",
       langue: "fr",
@@ -288,7 +288,7 @@ export const livresDataAladnane = reactive({
       addedToWishlist: false,
     },
     {
-      id: 118,
+      id: 1180,
       title: "mousaeid",
       level: "CM1",
       langue: "en",
@@ -303,7 +303,7 @@ export const livresDataAladnane = reactive({
       littleBooksCount: 3,
     },
     {
-      id: 119,
+      id: 1190,
       title: "Coucou",
       level: "CE1",
       langue: "fr",
@@ -317,7 +317,7 @@ export const livresDataAladnane = reactive({
       addedToWishlist: false,
     },
     {
-      id: 200,
+      id: 2000,
       title: "couca",
       level: "CE2",
       langue: "ar",
@@ -331,7 +331,7 @@ export const livresDataAladnane = reactive({
       addedToWishlist: false,
     },
     {
-      id: 201,
+      id: 2010,
       title: "couca",
       level: "CE1",
       langue: "ar",
@@ -345,7 +345,7 @@ export const livresDataAladnane = reactive({
       addedToWishlist: false,
     },
     {
-      id: 202,
+      id: 2020,
       title: "couca",
       level: "CE2",
       langue: "ar",
@@ -359,7 +359,7 @@ export const livresDataAladnane = reactive({
       addedToWishlist: false,
     },
     {
-      id: 203,
+      id: 2030,
       title: "couca",
       level: "CP",
       langue: "ar",
@@ -373,7 +373,7 @@ export const livresDataAladnane = reactive({
       addedToWishlist: false,
     },
     {
-      id: 204,
+      id: 2040,
       title: "couca",
       level: "CM2",
       langue: "ar",
@@ -387,7 +387,7 @@ export const livresDataAladnane = reactive({
       addedToWishlist: false,
     },
     {
-      id: 205,
+      id: 2050,
       title: "couca",
       level: "CM2",
       langue: "ar",
@@ -401,7 +401,7 @@ export const livresDataAladnane = reactive({
       addedToWishlist: false,
     },
     {
-      id: 206,
+      id: 2060,
       title: "couca",
       level: "CP",
       langue: "ar",
@@ -415,7 +415,7 @@ export const livresDataAladnane = reactive({
       addedToWishlist: false,
     },
     {
-      id: 207,
+      id: 2070,
       title: "couca",
       level: "CE2",
       langue: "ar",

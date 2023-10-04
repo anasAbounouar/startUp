@@ -315,3 +315,6 @@
 .opacity-50{
     opacity: .5;
 }
+.cursor-pointer {
+    cursor: pointer;
+}
