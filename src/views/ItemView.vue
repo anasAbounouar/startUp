@@ -3,7 +3,7 @@
     <section id="itemView">
       <div class="container bookPath">
         <span class="me-2">
-          <div @click.prevent="goToLibrary()" class="c-black">
+          <div @click.prevent="goToLibrary()" class="c-black cursor-pointer">
             {{ livresData.library }}
           </div> </span
         ><svg
@@ -20,7 +20,7 @@
           />
         </svg>
         <span class="ms-2 me-2">
-          <div @click.prevent="goBack()" class="c-black">
+          <div @click.prevent="goBack()" class="c-black cursor-pointer">
             {{ livresData.arrow }}
           </div></span
         >

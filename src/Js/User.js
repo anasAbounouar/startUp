@@ -1,4 +1,5 @@
-export let userCart = {
+import { reactive } from "vue";
+export let userCart = reactive({
   arrissala: {
     ecritures: {
       cartCount: 0,
@@ -16,12 +17,6 @@ export let userCart = {
     },
   },
   aladnane: {
-    // ecriture: {
-    //   cartCount: ecrituresDataAladnane.cartCount,
-    //   WishlistCount: ecrituresDataAladnane.WishlistCount,
-    //   totalPrice: ecrituresDataAladnane.totalPrice,
-    //   wishlistBooks: ecrituresDataAladnane.wishlistBooks,
-    // },
     livres: {
       cartCount: 0,
       WishlistCount: 0,
@@ -30,5 +25,5 @@ export let userCart = {
       purchasedBooks: [],
     },
   },
-};
+});
 export let onlineUser = {};

@@ -75,6 +75,8 @@ ul li {
   --upNavbar-height: 47px;
   --NavInter-height: 90px;
   --login-bg: #D18742;
+  --livres-color: #BD324A;
+  --ecritures-color: #4CAF50;
 }
 
 .c-contact {
@@ -114,6 +116,10 @@ body {
 
 .bg-orange {
   background-color: var(--orange-color);
+}
+
+.bg-secondary-color-danger {
+  background-color: var(--secondary-color-danger);
 }
 
 h1, h2, h3, h4, h5, h6 {

@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import LibraryIntroView from "../views/LibraryIntroView.vue";
-import LivresView from "../views/LivresView.vue";
-import ItemView from "../views/ItemView.vue";
-import LoginView from "@/views/Accounts/LoginView.vue";
-import CartView from "@/views/Accounts/CartView.vue";
+// import LibraryIntroView from "../views/LibraryIntroView.vue";
+// import LivresView from "../views/LivresView.vue";
+// import ItemView from "../views/ItemView.vue";
+// import LoginView from "@/views/Accounts/LoginView.vue";
+// import CartView from "@/views/Accounts/CartView.vue";
 const routes = [
   {
     path: "/",
@@ -14,12 +14,12 @@ const routes = [
   {
     path: "/Login",
     name: "login-page",
-    component: LoginView,
+    component: () => import("@/views/Accounts/LoginView.vue"),
   },
   {
     path: "/Cart",
     name: "cart-page",
-    component: CartView,
+    component: () => import("@/views/Accounts/CartView.vue"),
   },
   // {
   //   path: "/about",
@@ -33,17 +33,17 @@ const routes = [
   {
     path: "/Acceuil/:nom",
     name: "library-intro",
-    component: LibraryIntroView,
+    component: () => import("../views/LibraryIntroView.vue"),
   },
   {
     path: "/Acceuil/:nom/:type",
     name: "livres-page",
-    component: LivresView,
+    component: () => import("../views/LivresView.vue"),
   },
   {
     path: "/Acceuil/:nom/:type/:itemId",
     name: "item-page",
-    component: ItemView,
+    component: () => import("../views/ItemView.vue"),
   },
 ];
 

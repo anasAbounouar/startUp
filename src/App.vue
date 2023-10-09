@@ -170,10 +170,13 @@ const routesWithUpNavbar = [
   "/Acceuil/arrissala/LivresHistoires",
   "/Acceuil/arrissala/Ecritures",
   "/Acceuil/aladnane/LivresHistoires",
+  "/Cart",
 ];
 const routesWithNavIntern = [
   "/Acceuil/arrissala/LivresHistoires",
+  "/Acceuil/arrissala/Ecritures",
   "/Acceuil/aladnane/LivresHistoires",
+  "/Cart",
 ];
 const namesWithNavIntern = ["item-page"];
 const namesWithUpNavbar = ["item-page"];
@@ -278,10 +281,12 @@ export default {
       // var nav = document.querySelector("nav");
       const navbar = document.querySelector(".NavInter");
       console.log(navbar);
-      if (window.scrollY >= 47) {
-        navbar.classList.add("navModification");
-      } else {
-        navbar.classList.remove("navModification");
+      if (navbar) {
+        if (window.scrollY >= 47) {
+          navbar.classList.add("navModification");
+        } else {
+          navbar.classList.remove("navModification");
+        }
       }
     },
   },

@@ -430,23 +430,48 @@ const livresDataArrissala = reactive({
       addedToWishlist: false,
     },
   ],
+  purchasedBooks: [],
 });
 // Function to add or remove a book to/from the cart with optional quantity
 export function addToCartLivresDataArrissala(book, quantity) {
   // quantity null means unprovided means 1
   const realQuantity = quantity === null ? 1 : quantity;
+  // Calculate the total price based on the realQuantity
+  const totalPriceChange = parseFloat(
+    parseFloat(book.price) * parseFloat(realQuantity)
+  );
   livresDataArrissala.totalPrice += book.addedToCart
-    ? -parseFloat(book.price) * realQuantity
-    : parseFloat(book.price) * realQuantity;
+    ? -totalPriceChange
+    : totalPriceChange;
   userCart.arrissala.livres.totalPrice = livresDataArrissala.totalPrice; //usercart shit online
   livresDataArrissala.cartCount += book.addedToCart ? -1 : 1;
   userCart.arrissala.livres.cartCount = livresDataArrissala.cartCount; //usercart shit online
   setCookie(`addedToCart_${book.id}`, !book.addedToCart, 2);
   addToCartGeneral(book, quantity);
   // Toggle whether the book is added to the cart
+  if (!book.addedToCart) {
+    livresDataArrissala.purchasedBooks.push({ book, quantity: realQuantity });
+  } else {
+    const bookIndex = livresDataArrissala.purchasedBooks.findIndex(
+      (item) => item.book.id === book.id
+    );
+    if (bookIndex !== 1) {
+      // livresDataArrissala.purchasedBooks[bookIndex].quantity.filter((ele) => {
+      //   return ele.id !== book.id;
+      // });
+      livresDataArrissala.purchasedBooks.splice(bookIndex, 1);
+    }
+  }
+  console.log(
+    "livresDataArrissala.purchasedBooks",
+    "userCart.arrissala.livres.purchasedBooks",
+    livresDataArrissala.purchasedBooks,
+    userCart.arrissala.livres.purchasedBooks
+  );
+  userCart.arrissala.livres.purchasedBooks = livresDataArrissala.purchasedBooks;
   book.addedToCart = !book.addedToCart;
 }
-export async function addToWishlistLivresDataArrissala(book) {
+export function addToWishlistLivresDataArrissala(book) {
   if (!book.addedToWishlist) {
     livresDataArrissala.WishlistCount++;
     livresDataArrissala.wishlistBooks.push(book);

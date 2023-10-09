@@ -15,7 +15,7 @@ export const livresDataAladnane = reactive({
   wishlistBooks: [],
   books: [
     {
-      id: 990,
+      id: 9900,
       title: "Miftah al qirâ’a 1",
       level: "1 Bac",
       langue: "fr",
@@ -429,6 +429,7 @@ export const livresDataAladnane = reactive({
       addedToWishlist: false,
     },
   ],
+  purchasedBooks: [],
 });
 // Function to add or remove a book to/from the cart with optional quantity
 export function addToCartLivresDataAladnane(book, quantity) {
@@ -442,8 +443,19 @@ export function addToCartLivresDataAladnane(book, quantity) {
   setCookie(`addedToCart_${book.id}`, !book.addedToCart, 2);
   addToCartGeneral(book, quantity);
   // Toggle whether the book is added to the cart
+  // Toggle whether the book is added to the cart
+  if (!book.addedToCart) {
+    livresDataAladnane.purchasedBooks.push({ book, quantity: realQuantity });
+  } else {
+    const bookIndex = livresDataAladnane.purchasedBooks.findIndex(
+      (item) => item.book.id === book.id
+    );
+    if (bookIndex !== 1) {
+      livresDataAladnane.purchasedBooks.splice(bookIndex, 1);
+    }
+  }
+  userCart.aladnane.livres.purchasedBooks = livresDataAladnane.purchasedBooks;
   book.addedToCart = !book.addedToCart;
-  userCart.aladnane.livres = livresDataAladnane; //usercart online shit
 }
 export async function addToWishlistLivresDataAladnane(book) {
   if (!book.addedToWishlist) {

@@ -26,7 +26,7 @@ export const ecrituresDataArrissala = reactive({
       maxQuantity: 3,
     },
     {
-      id: 1990,
+      id: 100,
       title: "cahier 9",
       level: "Moyenne",
       imgSrc: [
@@ -251,7 +251,7 @@ export const ecrituresDataArrissala = reactive({
       littleBooksCount: 2,
     },
     {
-      id: 18,
+      id: 117,
       title: "Miftah al qirâ’a 1",
       level: "Petite",
       langue: "fr",
@@ -265,7 +265,7 @@ export const ecrituresDataArrissala = reactive({
       addedToWishlist: false,
     },
     {
-      id: 19,
+      id: 118,
       title: "mousaeid",
       level: "CM1",
       langue: "en",
@@ -280,7 +280,7 @@ export const ecrituresDataArrissala = reactive({
       littleBooksCount: 3,
     },
     {
-      id: 20,
+      id: 119,
       title: "Coucou",
       level: "CE1",
       langue: "fr",
@@ -294,7 +294,7 @@ export const ecrituresDataArrissala = reactive({
       addedToWishlist: false,
     },
     {
-      id: 21,
+      id: 120,
       title: "couca",
       level: "CE2",
       langue: "ar",
@@ -308,7 +308,7 @@ export const ecrituresDataArrissala = reactive({
       addedToWishlist: false,
     },
     {
-      id: 22,
+      id: 121,
       title: "couca",
       level: "CE1",
       langue: "ar",
@@ -322,7 +322,7 @@ export const ecrituresDataArrissala = reactive({
       addedToWishlist: false,
     },
     {
-      id: 23,
+      id: 122,
       title: "couca",
       level: "CE2",
       langue: "ar",
@@ -336,7 +336,7 @@ export const ecrituresDataArrissala = reactive({
       addedToWishlist: false,
     },
     {
-      id: 24,
+      id: 123,
       title: "couca",
       level: "CP",
       langue: "ar",
@@ -350,7 +350,7 @@ export const ecrituresDataArrissala = reactive({
       addedToWishlist: false,
     },
     {
-      id: 25,
+      id: 124,
       title: "couca",
       level: "CM2",
       langue: "ar",
@@ -364,7 +364,7 @@ export const ecrituresDataArrissala = reactive({
       addedToWishlist: false,
     },
     {
-      id: 26,
+      id: 125,
       title: "couca",
       level: "CM2",
       langue: "ar",
@@ -378,7 +378,7 @@ export const ecrituresDataArrissala = reactive({
       addedToWishlist: false,
     },
     {
-      id: 27,
+      id: 126,
       title: "couca",
       level: "CP",
       langue: "ar",
@@ -392,7 +392,7 @@ export const ecrituresDataArrissala = reactive({
       addedToWishlist: false,
     },
     {
-      id: 28,
+      id: 127,
       title: "couca",
       level: "CE2",
       langue: "ar",
@@ -405,6 +405,7 @@ export const ecrituresDataArrissala = reactive({
       addedToWishlist: false,
     },
   ],
+  purchasedBooks: [],
 });
 export function addToCartEcrituresDataArrissala(book, quantity) {
   const realQuantity = quantity === null ? 1 : quantity;
@@ -415,8 +416,25 @@ export function addToCartEcrituresDataArrissala(book, quantity) {
   setCookie(`addedToCart_${book.id}`, !book.addedToCart, 2);
   addToCartGeneral(book, quantity);
   // Toggle whether the book is added to the cart
+  if (!book.addedToCart) {
+    ecrituresDataArrissala.purchasedBooks.push({
+      book,
+      quantity: realQuantity,
+    });
+  } else {
+    const bookIndex = ecrituresDataArrissala.purchasedBooks.findIndex(
+      (item) => item.book.id === book.id
+    );
+    if (bookIndex !== 1) {
+      // livresDataArrissala.purchasedBooks[bookIndex].quantity.filter((ele) => {
+      //   return ele.id !== book.id;
+      // });
+      ecrituresDataArrissala.purchasedBooks.splice(bookIndex, 1);
+    }
+  }
+  userCart.arrissala.ecritures.purchasedBooks =
+    ecrituresDataArrissala.purchasedBooks;
   book.addedToCart = !book.addedToCart;
-  userCart.arrissala.ecritures = ecrituresDataArrissala; // suercart online shit
 }
 export function addToWishlistEcrituresDataArrissala(book) {
   if (!book.addedToWishlist) {

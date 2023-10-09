@@ -10,17 +10,25 @@
             </h3>
           </div>
           <div class="col-md-8">
-            <form>
+            <form class="cursor-pointer">
               <select
                 v-model="SelectedOption"
                 name="choisir"
                 @change="navigateToPage"
+                class="cursor-pointer"
               >
-                <option value="" selected disabled hidden>
+                <option
+                  class="cursor-pointer"
+                  value=""
+                  selected
+                  disabled
+                  hidden
+                >
                   --Choisir votre fournisseur--
                 </option>
                 <option
                   v-for="option in options"
+                  class="cursor-pointer"
                   :key="option.id"
                   :value="option.value"
                 >

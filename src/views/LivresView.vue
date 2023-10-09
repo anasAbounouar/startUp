@@ -452,8 +452,8 @@ export default {
             type: this.selectedCategorie,
           },
         });
-        console.log(this.$route.params.type);
         this.updateData();
+        this.selectedCategorie = "";
       }
     },
     updateSideBarClicked(value) {
