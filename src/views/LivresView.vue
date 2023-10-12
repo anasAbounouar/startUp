@@ -88,12 +88,12 @@
             </div>
           </div>
           <p class="d-flex">
-            Showing
+            Affichage de
             {{ showRemainingBooks ? "0" : displayedBooks.length }}-{{
               showRemainingBooks ? displayedBooks.length : bookCount
             }}
-            of
-            <span class="ms-2"> {{ bookCount }} results </span>
+            sur
+            <span class="ms-2"> {{ bookCount }} resultats </span>
           </p>
           <button
             @click.prevent="toggleBooks"

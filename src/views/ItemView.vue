@@ -228,13 +228,15 @@
                   {{ calculateLocalPrice }} DH
                 </h5>
 
-                <button
-                  v-show="book.addedToCart"
-                  class="btn btn-warning modifier btn-primary"
-                  @click.prevent="cartButtonClicking()"
-                >
-                  Modifier ?
-                </button>
+                <transition
+                  ><button
+                    v-show="book.addedToCart"
+                    class="btn btn-warning modifier btn-primary"
+                    @click.prevent="cartButtonClicking()"
+                  >
+                    Modifier ?
+                  </button>
+                </transition>
               </div>
               <div class="container mt-4">
                 <div class="row mt-3 align-items-end justify-content-between">
@@ -502,6 +504,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 #itemView {
   padding-top: 10px !important;
   padding-bottom: 10px !important;
@@ -609,6 +620,15 @@ export default {
         td:first-child {
           color: grey;
         }
+      }
+    }
+  }
+  .partagerSur {
+    li {
+      cursor: pointer;
+      transition: 0.2s;
+      &:hover {
+        transform: translateY(-5px);
       }
     }
   }

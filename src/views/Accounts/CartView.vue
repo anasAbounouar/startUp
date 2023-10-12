@@ -77,7 +77,11 @@
                     </h6>
                   </div>
                   <div class="col-2 d-flex flex-d-c justify-content-around">
-                    <div class="modify" @click="toggleEditMode(item.book)">
+                    <div
+                      v-if="!editMode || item.book !== editingBook"
+                      class="modify"
+                      @click="toggleEditMode(item.book)"
+                    >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="30"
@@ -97,6 +101,13 @@
                           </clipPath>
                         </defs>
                       </svg>
+                    </div>
+                    <div
+                      v-else
+                      class="modify cursor-pointer"
+                      @click="toggleEditMode(item.book)"
+                    >
+                      <i class="fa-solid fa-floppy-disk"></i>
                     </div>
                     <div
                       class="text-decoration-underline cursor-pointer"
@@ -150,7 +161,9 @@
                   class="btn btn-warning d-flex mt-3 ms-2 cancel align-items-center"
                 >
                   <i class="fa-solid fa-xmark me-2"></i>
-                  <p class="p-0 m-0">Annuler votre panier</p>
+                  <p class="p-0 m-0" @click="deleteItems()">
+                    Annuler votre panier
+                  </p>
                 </button>
               </div>
             </div>
@@ -212,6 +225,12 @@ export default {
       // console.log("item", book, "bookType", type, arrissala);
       console.log("book:", book, "with quantity", quantity);
       addToCartLivresDataArrissala(book, quantity);
+    },
+    deleteItems() {
+      console.log("array of books", userCart.arrissala.livres.purchasedBooks);
+      for (const item of userCart.arrissala.livres.purchasedBooks) {
+        this.deleteItem(item.book, item.quantity);
+      }
     },
     transformType(totalPrice, type) {
       if (totalPrice === 0) {
@@ -319,6 +338,9 @@ export default {
     svg {
       max-height: 20px;
       cursor: pointer;
+    }
+    i {
+      font-size: 20px;
     }
   }
 }

@@ -21,7 +21,9 @@
       <div class="row p-4 align-items-center justify-content-center">
         <div class="col-sm-10 login col-lg-5 bg-white p-3">
           <div class="d-flex align-items-center justify-content-center logo">
-            <img class="img-fluid" src="@/assets/logo.png" alt="" />
+            <router-link to="/"
+              ><img class="img-fluid" src="@/assets/logo.png" alt=""
+            /></router-link>
           </div>
           <form action="" id="form-login">
             <input
@@ -39,10 +41,16 @@
             </button>
           </form>
           <p class="c-grey my-3">Or</p>
-          <p>.</p>
-          <p>.</p>
-          <p>.</p>
-          <p>.</p>
+          <div class="boxes">
+            <div class="box" v-for="way in ways" :key="way">
+              <span>
+                <img :src="way.img" alt="" />
+              </span>
+              <span class="way-text">
+                {{ way.text }}
+              </span>
+            </div>
+          </div>
           <div class="my-3">
             <ul class="d-flex justify-content-center">
               <li class="p-1">
@@ -81,6 +89,20 @@ export default {
       AccountsData,
       email: "",
       password: "",
+      ways: [
+        {
+          text: "Continuer avec google",
+          img: require("@/assets/login/google-logo.svg"),
+        },
+        {
+          text: "Continuer avec microsoft",
+          img: require("@/assets/login/microsoft.svg"),
+        },
+        {
+          text: "Continuer avec Apple",
+          img: require("@/assets/login/apple-logo.svg"),
+        },
+      ],
     };
   },
   methods: {
@@ -145,11 +167,42 @@ export default {
         justify-content: center;
         cursor: pointer;
         width: 100%;
+        transition: 0.3s;
         &:hover {
           background-color: var(--ds-background-brand-bold-hovered, #0065ff);
         }
       }
     }
+    .boxes {
+      margin-bottom: 16px;
+      margin: 0;
+      padding: 0;
+      .box {
+        cursor: pointer;
+        display: flex;
+        background: white;
+        margin-bottom: 10px;
+        padding: 5px 10px;
+        box-shadow: rgba(0, 0, 0, 0.2) 1px 1px 5px 0px !important;
+        transition: 0.3s;
+        &:hover {
+          opacity: 0.9;
+          box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 5px 0px !important;
+        }
+        img {
+          height: 18px;
+          width: 18px;
+        }
+        .way-text {
+          flex: 1;
+        }
+      }
+    }
+  }
+  #resetPassword,
+  #signup {
+    color: #0052cc !important;
+    font-size: 14px;
   }
 }
 @media (max-width: 767px) {
