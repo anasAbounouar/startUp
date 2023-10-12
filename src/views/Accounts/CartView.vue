@@ -6,7 +6,7 @@
         <!-- <p>{{ userCart }}</p> -->
         <div class="mt-5">
           <div class="row justify-content-center align-items-center">
-            <div class="col-12 row text-center text-lg-left">
+            <div class="col-12 row text-center text-lg-start">
               <h5 class="fw-bold d-lg-flex">Ton Panier</h5>
               <p class="d-lg-flex">
                 Vous n'êtes pas prêt à passer à la caisse ?
@@ -19,11 +19,9 @@
               <div
                 v-for="(bookType, type) in userCart.arrissala"
                 :key="type"
-                class="row align-items-center justify-content-center align-items-stretch"
+                class="row align-items-center justify-content-center align-items-stretch m-0"
               >
-                <!-- <div v-if="type === 'ecritures'">Ecritures</div>
-                <div v-if="type === 'livres'">Livres & Histoires</div> -->
-                <p class="fw-bold" :style="typeStyle(type)">
+                <p class="fw-bold text-lg-left" :style="typeStyle(type)">
                   {{ transformType(bookType.totalPrice, type) }}
                 </p>
                 <!-- <p>{{ bookType }}</p> -->
@@ -53,15 +51,33 @@
                     <h6 class="m-0">{{ item.book.title }}</h6>
                     <p class="m-0">SKU : {{ item.book.id }}</p>
                     <p class="m-0">Niveau :{{ item.book.level }}</p>
-                    <p class="m-0">Quantité :{{ item.quantity }}</p>
-                    <p class="m-0">prix :{{ item.book.price }}</p>
+                    <template v-if="editMode && item.book === editingBook">
+                      <input
+                        v-model="item.quantity"
+                        type="number"
+                        min="1"
+                        @blur="toggleEditMode(item)"
+                      />
+                    </template>
+                    <p
+                      v-if="!editMode || item.book !== editingBook"
+                      class="m-0"
+                    >
+                      Quantité :{{ item.quantity }}
+                    </p>
+                    <p
+                      v-if="!editMode || item.book !== editingBook"
+                      class="m-0"
+                    >
+                      prix :{{ item.book.price }}
+                    </p>
                     <h6 class="m-0 mt-2">
                       Sous-total :
                       {{ multiply(item.book.price, item.quantity) }} MAD
                     </h6>
                   </div>
                   <div class="col-2 d-flex flex-d-c justify-content-around">
-                    <div class="modify">
+                    <div class="modify" @click="toggleEditMode(item.book)">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="30"
@@ -107,18 +123,20 @@
                   </option>
                 </select>
               </div>
-              <p
-                v-if="this.modeR === 'transport'"
-                class="c-grey d-flex m-0 p-0"
+              <transition>
+                <p
+                  v-if="this.modeR === 'transport'"
+                  class="c-grey d-flex m-0 p-0"
+                >
+                  La commande arrive apres 24 heures da la sortie du stock
+                </p></transition
               >
-                La commande arrive apres 24 heures da la sortie du stock
-              </p>
               <div class="d-flex justify-content-between align-items-center">
                 <p class="p-0 my-2">Total</p>
                 <div class="fw-bold">MAD</div>
               </div>
               <button class="btn w-full my-2 mb-3 btn-success">
-                Continue to checkout
+                Continuer vers le paiement
               </button>
               <div class="d-flex justify-content-between">
                 <button
@@ -151,6 +169,8 @@ export default {
   name: "cart-page",
   data() {
     return {
+      editMode: false,
+      editingBook: null,
       arrissala: [],
       aladnane: [],
       userCart,
@@ -181,6 +201,10 @@ export default {
     // },
   },
   methods: {
+    toggleEditMode(book) {
+      this.editingBook = book;
+      this.editMode = !this.editMode;
+    },
     multiply(item1, item2) {
       return parseFloat(item1 * item2);
     },
@@ -216,20 +240,19 @@ export default {
       }
     },
   },
-  // mounted() {
-  //   if (userCart.arrissala.livres) {
-  //     this.arrissala.push(userCart.arrissala.livres);
-  //   }
-  //   if (userCart.arrissala.ecritures) {
-  //     this.arrissala.push(userCart.arrissala.ecritures);
-  //   }
-  //   if (userCart.aladnane.livres) {
-  //     this.aladnane.push(userCart.aladnane.livres);
-  //   }
-  // },
 };
 </script>
 <style lang="scss" scoped>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 #cart {
   select {
     margin-left: 10px;
@@ -264,6 +287,9 @@ export default {
       bottom: 0px;
       left: 50%;
       transform: translateX(-50%);
+      @media (max-width: 767px) {
+        width: 100%;
+      }
     }
     p {
       font-size: 13px;

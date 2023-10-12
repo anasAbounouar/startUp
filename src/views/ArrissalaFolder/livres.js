@@ -449,25 +449,23 @@ export function addToCartLivresDataArrissala(book, quantity) {
   setCookie(`addedToCart_${book.id}`, !book.addedToCart, 2);
   addToCartGeneral(book, quantity);
   // Toggle whether the book is added to the cart
+  // Calculate the multipliedPrice based on the realQuantity and book's price
+  // const multipliedPrice = parseFloat(
+  //   parseFloat(book.price) * parseFloat(realQuantity)
+  // );
   if (!book.addedToCart) {
-    livresDataArrissala.purchasedBooks.push({ book, quantity: realQuantity });
+    livresDataArrissala.purchasedBooks.push({
+      book,
+      quantity: realQuantity,
+    });
   } else {
     const bookIndex = livresDataArrissala.purchasedBooks.findIndex(
       (item) => item.book.id === book.id
     );
     if (bookIndex !== 1) {
-      // livresDataArrissala.purchasedBooks[bookIndex].quantity.filter((ele) => {
-      //   return ele.id !== book.id;
-      // });
       livresDataArrissala.purchasedBooks.splice(bookIndex, 1);
     }
   }
-  console.log(
-    "livresDataArrissala.purchasedBooks",
-    "userCart.arrissala.livres.purchasedBooks",
-    livresDataArrissala.purchasedBooks,
-    userCart.arrissala.livres.purchasedBooks
-  );
   userCart.arrissala.livres.purchasedBooks = livresDataArrissala.purchasedBooks;
   book.addedToCart = !book.addedToCart;
 }

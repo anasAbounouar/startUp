@@ -50,6 +50,17 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  scrollBehavior(to) {
+    // If the route has a hash, scroll to the hash
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: "auto",
+      };
+    }
+    // Otherwise, scroll to the top of the page
+    return { top: 0, behavior: "auto" };
+  },
 });
 
 export default router;
